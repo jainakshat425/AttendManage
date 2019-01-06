@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.example.android.attendmanage"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -28,8 +28,15 @@ dependencies {
 
     implementation 'com.android.support:cardview-v7:27.1.1'
 
+
     //simplified networking
     implementation 'com.android.volley:volley:1.1.1';
+
+    //day picker
+    implementation 'ca.antonious:materialdaypicker:0.4.0'
+
+    //conversion of JSON to Java Object and vice-versa
+    implementation 'com.google.code.gson:gson:2.8.5'
 
     //binds view with View Object
     implementation 'com.jakewharton:butterknife:8.5.1'
