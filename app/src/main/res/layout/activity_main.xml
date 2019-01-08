@@ -9,27 +9,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginRight="8dp"
-        android:layout_gravity="center"
         android:orientation="vertical">
 
         <LinearLayout style="@style/main_container">
-
-            <RelativeLayout
-                android:id="@+id/manage_class_main"
-                style="@style/main_card_container">
-
-                <ImageView
-                    android:id="@+id/iv_class"
-                    style="@style/main_image_view"
-                    android:src="@drawable/ic_class" />
-
-                <TextView
-                    style="@style/main_textview"
-                    android:layout_below="@id/iv_class"
-                    android:text="Manage Class(s)" />
-            </RelativeLayout>
-
 
             <RelativeLayout
                 android:id="@+id/manage_branch_main"
@@ -44,6 +28,22 @@
                     style="@style/main_textview"
                     android:layout_below="@id/iv_branch"
                     android:text="Manage Branch(s)" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/manage_class_main"
+                style="@style/main_card_container">
+
+                <ImageView
+                    android:id="@+id/iv_class"
+                    style="@style/main_image_view"
+                    android:src="@drawable/ic_class" />
+
+                <TextView
+                    style="@style/main_textview"
+                    android:layout_below="@id/iv_class"
+                    android:text="Manage Class(s)" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -146,8 +146,8 @@
 
                 <TextView
                     style="@style/main_textview"
-                    android:text="Student Schedule"
-                    android:layout_below="@id/iv_std_sch"/>
+                    android:layout_below="@id/iv_std_sch"
+                    android:text="Student Schedule" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

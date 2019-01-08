@@ -8,7 +8,7 @@ public class SharedPrefManager {
     private static Context mCtx;
 
     private static final String MY_SHARED_PREF = "credentialPref";
-    public static final String COLL_ID = "_id";
+    public static final String COLL_ID = "college_id";
     public static final String COLL_NAME = "coll_name";
     public static final String COLL_FULL_NAME = "coll_full_name";
     public static final String ADMIN_ID = "coll_admin_id";

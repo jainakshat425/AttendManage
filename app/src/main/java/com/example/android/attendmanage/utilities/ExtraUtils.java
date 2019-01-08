@@ -52,9 +52,21 @@ public class ExtraUtils {
     public static final String EXTRA_FAC_DEPT = "extra_fac_dept";
 
 
+    public static final String EXTRA_BRANCH_OBJ = "extra_branch_obj";
+    public static final String EXTRA_EDIT_MODE = "extra_edit_mode";
+    public static final int MODE_UPDATE = 1;
+    public static final int MODE_NEW = 2;
+
+
     private static final String DB_URL = "http://192.168.43.156/attendmanagephp/v1/";
 
     public static final String ADMIN_LOGIN_URL = DB_URL + "adminLogin.php";
+    public static final String GET_FACS_URL = DB_URL +"getFaculties.php";
+    public static final String DELETE_BRANCH_URL = DB_URL + "deleteBranch.php";
+    public static final String GET_BRANCHES_URL = DB_URL + "getBranches.php";
+    public static final String SAVE_BRANCH_URL = DB_URL + "saveBranch.php";
+
+
     public static final String GET_ATT_REC_URL = DB_URL + "getAttendanceRecords.php";
     public static final String GET_SUB_NAME_URL = DB_URL + "getSubjectsName.php";
     public static final String CHECK_ATTEND_ALREADY_EXIST = DB_URL + "checkAttendAlreadyExist.php";
@@ -63,7 +75,7 @@ public class ExtraUtils {
     public static final String SAVE_NEW_ATTEND_URL = DB_URL + "saveNewAttendance.php";
     public static final String UPDATE_ATTEND_URL = DB_URL + "updateAttendance.php";
     public static final String DELETE_RECORD_URL = DB_URL + "deleteAttendRecord.php";
-    public static final String GET_BRANCHES_URL = DB_URL + "getBranches.php";
+
     public static final String GET_SEMS_URL = DB_URL + "getSemesters.php";
     public static final String GET_SECS_URL = DB_URL + "getSections.php";
     public static final String GET_FAC_SCH_URL = DB_URL + "getFacSchedules.php";
