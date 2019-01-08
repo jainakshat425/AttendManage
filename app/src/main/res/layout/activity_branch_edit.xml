@@ -52,10 +52,6 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/branch_edit_done_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="16dp"
+        style="@style/fab_right_save"
         app:srcCompat="@drawable/ic_done_24px" />
 </LinearLayout>

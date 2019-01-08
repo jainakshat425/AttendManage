@@ -11,7 +11,7 @@
     android:paddingBottom="4dp">
 
     <TextView
-        android:id="@+id/branch_name"
+        android:id="@+id/class_b_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -29,32 +29,32 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginStart="6dp"
-        android:layout_toEndOf="@id/branch_name"
+        android:layout_toEndOf="@id/class_b_name"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/branch_full_name"
+            android:id="@+id/class_semester"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
             android:ellipsize="marquee"
             android:textColor="@android:color/black"
-            android:textSize="14sp"
-            tools:text="Computer Science" />
+            android:textSize="16sp"
+            tools:text="5th Sem" />
 
         <TextView
-            android:id="@+id/branch_hod"
+            android:id="@+id/class_section"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textStyle="bold|italic"
-            tools:text="HOD: Teacher" />
+            tools:text="Section: A" />
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/branch_menu"
+        android:id="@+id/class_menu"
         style="@style/popup_menu_iv"
-        app:srcCompat="@drawable/ic_menu" />
+        app:srcCompat="@drawable/ic_menu"/>
 
 </RelativeLayout>
 

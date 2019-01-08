@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="4dp"
+    tools:context=".ClassEditActivity">
+
+    <LinearLayout style="@style/SpinnerLayoutContainer">
+
+        <TextView
+            style="@style/SpinnerTextStyle"
+            android:text="Semester" />
+
+        <Spinner
+            android:id="@+id/class_sem_spin"
+            style="@style/SpinnerStyle" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/SpinnerLayoutContainer">
+
+        <TextView
+            style="@style/SpinnerTextStyle"
+            android:text="Branch" />
+
+        <Spinner
+            android:id="@+id/class_branch_spin"
+            style="@style/SpinnerStyle" />
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/class_section_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Section">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName|textCapCharacters" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/class_edit_done_fab"
+        style="@style/fab_right_save"
+        app:srcCompat="@drawable/ic_done_24px" />
+</LinearLayout>

@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.cardview.widget.CardView style="@style/card_rv_container">
+    <androidx.cardview.widget.CardView
+        style="@style/card_rv_container"
+        card_view:cardCornerRadius="5dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/branch_rv"
@@ -15,6 +17,6 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/branch_add_fab"
-        style="@style/fac_bottom_right"
+        style="@style/fab_bottom_right"
         app:srcCompat="@drawable/ic_add_24px" />
 </RelativeLayout>

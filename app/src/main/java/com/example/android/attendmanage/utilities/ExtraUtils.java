@@ -53,6 +53,7 @@ public class ExtraUtils {
 
 
     public static final String EXTRA_BRANCH_OBJ = "extra_branch_obj";
+    public static final String EXTRA_CLASS_OBJ = "extra_class_obj";
     public static final String EXTRA_EDIT_MODE = "extra_edit_mode";
     public static final int MODE_UPDATE = 1;
     public static final int MODE_NEW = 2;
@@ -65,6 +66,12 @@ public class ExtraUtils {
     public static final String DELETE_BRANCH_URL = DB_URL + "deleteBranch.php";
     public static final String GET_BRANCHES_URL = DB_URL + "getBranches.php";
     public static final String SAVE_BRANCH_URL = DB_URL + "saveBranch.php";
+    public static final String DELETE_CLASS_URL = DB_URL + "deleteClass.php";
+    public static final String GET_CLASSES_URL = DB_URL + "getClasses.php";
+    public static final String SAVE_CLASS_URL = DB_URL + "saveClass.php";
+    public static final String GET_BRANCH_NAMES_URL = DB_URL + "getBranchNames.php";
+
+
 
 
     public static final String GET_ATT_REC_URL = DB_URL + "getAttendanceRecords.php";

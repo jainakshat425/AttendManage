@@ -9,13 +9,21 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
     private SharedPrefManager mSharedPref;
 
-    @BindView(R.id.manage_branch_main)
-    RelativeLayout branchLayout;
+    @OnClick(R.id.manage_branch_main)
+    void startBranchActivity() {
+        startActivity(new Intent(MainActivity.this, BranchActivity.class));
+    }
+
+    @OnClick(R.id.manage_class_main)
+    void startClassActivity() {
+        startActivity(new Intent(MainActivity.this, ClassActivity.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +40,6 @@ public class MainActivity extends AppCompatActivity {
             String collFullName = mSharedPref.getCollFullName();
             String adminId = mSharedPref.getAdminId();
 
-            branchLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(MainActivity.this, BranchActivity.class));
-                }
-            });
-            Toast.makeText(this, collFullName +" : "+ collId, Toast.LENGTH_SHORT).show();
         } else {
             finish();
             startActivity(new Intent(this, LoginActivity.class));

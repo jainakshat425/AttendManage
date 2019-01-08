@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.cardview.widget.CardView style="@style/card_rv_container">
+    <androidx.cardview.widget.CardView
+        style="@style/card_rv_container"
+        card_view:cardCornerRadius="5dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/class_rv"
@@ -14,6 +17,6 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/class_add_fab"
-        style="@style/fac_bottom_right"
+        style="@style/fab_bottom_right"
         app:srcCompat="@drawable/ic_add_24px" />
 </RelativeLayout>
