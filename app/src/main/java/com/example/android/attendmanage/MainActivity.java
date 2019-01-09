@@ -25,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, ClassActivity.class));
     }
 
+    @OnClick(R.id.manage_sub_main)
+    void startSubjectActivity() {
+        startActivity(new Intent(MainActivity.this, SubjectActivity.class));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

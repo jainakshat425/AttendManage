@@ -9,13 +9,13 @@
     tools:context=".BranchActivity">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/branch_name_input"
+        android:id="@+id/sub_name_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:hint="Branch Name">
+        android:hint="Subject Name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -24,13 +24,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/branch_full_name_input"
+        android:id="@+id/sub_full_name_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:hint="Branch Full Name">
+        android:hint="Subject Full Name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -39,19 +39,26 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
-        style="@style/SpinnerLayoutContainer">
-
-        <TextView
-            style="@style/SpinnerTextStyle"
-            android:text="Select" />
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="32dp"
+        android:orientation="horizontal">
+        <!-- semester field -->
         <Spinner
-            android:id="@+id/branch_hod_spin"
+            android:id="@+id/sub_semester_spin"
+            style="@style/SpinnerStyle"
+            android:layout_marginEnd="4dp" />
+        <!-- branch field -->
+        <Spinner
+            android:id="@+id/sub_branch_spin"
             style="@style/SpinnerStyle" />
+
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/branch_edit_done_fab"
+        android:id="@+id/sub_edit_done_fab"
         style="@style/fab_right_save"
         app:srcCompat="@drawable/ic_done_24px" />
 </LinearLayout>

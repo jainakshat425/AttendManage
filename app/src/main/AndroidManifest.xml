@@ -33,6 +33,11 @@
             android:parentActivityName=".MainActivity" />
         <activity android:name=".ClassEditActivity"
             android:parentActivityName=".ClassActivity"/>
+
+        <activity android:name=".SubjectActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".SubjectEditActivity"
+            android:parentActivityName=".SubjectActivity"/>
     </application>
 
 </manifest>

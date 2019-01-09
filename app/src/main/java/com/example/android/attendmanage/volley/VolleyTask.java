@@ -12,6 +12,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.android.attendmanage.BranchEditActivity;
 import com.example.android.attendmanage.ClassEditActivity;
 import com.example.android.attendmanage.SharedPrefManager;
+import com.example.android.attendmanage.SubjectEditActivity;
 import com.example.android.attendmanage.utilities.ExtraUtils;
 
 import org.json.JSONException;
@@ -314,6 +315,102 @@ public class VolleyTask {
 
                 params.put(SharedPrefManager.COLL_ID, String.valueOf(collegeId));
 
+                return params;
+            }
+        };
+        RequestHandler.getInstance(context).addToRequestQueue(request);
+    }
+
+
+    public static void getSubjects(final Context mContext, final int collId,
+                                   VolleyCallback callback) {
+        StringRequest request = new StringRequest(Request.Method.POST,
+                ExtraUtils.GET_SUBJECTS_URL,
+                response -> {
+                    try {
+                        JSONObject jObj = new JSONObject(response);
+
+                        if (!jObj.getBoolean("error")) {
+                            callback.onSuccessResponse(jObj);
+                        } else {
+                            Toast.makeText(mContext,
+                                    jObj.getString("message"),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }, error -> {
+            Toast.makeText(mContext, error.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("college_id", String.valueOf(collId));
+                return params;
+            }
+        };
+        RequestHandler.getInstance(mContext).addToRequestQueue(request);
+    }
+
+    public static void deleteSubject(Context context, int subId,
+                                   VolleyCallback volleyCallback) {
+        StringRequest request = new StringRequest(Request.Method.POST,
+                ExtraUtils.DELETE_SUBJECT_URL,
+                response -> {
+                    try {
+                        JSONObject jObj = new JSONObject(response);
+                        if (!jObj.getBoolean("error")) {
+                            volleyCallback.onSuccessResponse(jObj);
+                        }
+                        Toast.makeText(context, jObj.getString("message"),
+                                Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }, error -> Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show()) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("sub_id", String.valueOf(subId));
+                return params;
+            }
+        };
+        RequestHandler.getInstance(context).addToRequestQueue(request);
+    }
+
+    public static void saveSubject(Context context, int collId, int subId, String subJson) {
+        ProgressDialog pDialog = new ProgressDialog(context);
+        pDialog.setMessage("Saving...");
+        pDialog.show();
+        StringRequest request = new StringRequest(Request.Method.POST,
+                ExtraUtils.SAVE_SUBJECT_URL,
+                response -> {
+                    try {
+                        JSONObject jObj = new JSONObject(response);
+                        Toast.makeText(context,
+                                jObj.getString("message"),
+                                Toast.LENGTH_SHORT).show();
+                        if (!jObj.getBoolean("error"))
+                            ((SubjectEditActivity) context).finish();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    pDialog.dismiss();
+                }, error -> {
+            Toast.makeText(context, error.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                if (subId != -1) {
+                    params.put("sub_id", String.valueOf(subId));
+                }
+                params.put("college_id", String.valueOf(collId));
+                params.put("subject_obj", subJson);
                 return params;
             }
         };
