@@ -114,18 +114,35 @@ public class SubjectEditActivity extends AppCompatActivity {
             }
         });
 
+        setupSemesterSpinner();
+
         branchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
-                branch = (String) parent.getItemAtPosition(pos);
+                if (pos != 0) {
+                    branch = (String) parent.getItemAtPosition(pos);
+                }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
 
-        setupSemesterSpinner();
+        semesterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
+                if (pos != 0) {
+                    semester = (String) parent.getItemAtPosition(pos);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void setupSemesterSpinner() {
@@ -143,16 +160,5 @@ public class SubjectEditActivity extends AppCompatActivity {
                 }
             }
         }
-
-        semesterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
-                semester = (String) parent.getItemAtPosition(pos);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
     }
 }

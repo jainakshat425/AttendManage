@@ -79,7 +79,7 @@ public class BranchEditActivity extends AppCompatActivity {
                 JSONArray facJsonArr = jObj.getJSONArray("faculty");
                 List<String> facList = new ArrayList<>();
                 facList.add("Head Of Dept.");
-                for(int i=0; i<facJsonArr.length(); i++) {
+                for (int i = 0; i < facJsonArr.length(); i++) {
                     facList.add(facJsonArr.getString(i));
                 }
                 String[] facArr = facList.toArray(new String[0]);
@@ -104,9 +104,8 @@ public class BranchEditActivity extends AppCompatActivity {
         hodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
-                hodSelected = (String) parent.getItemAtPosition(pos);
-                Toast.makeText(BranchEditActivity.this, hodSelected, Toast.LENGTH_SHORT)
-                        .show();
+                if (pos != 0)
+                    hodSelected = (String) parent.getItemAtPosition(pos);
             }
 
             @Override
