@@ -2,6 +2,7 @@ package com.example.android.attendmanage.utilities;
 
 import com.example.android.attendmanage.pojos.Branch;
 import com.example.android.attendmanage.pojos.Class;
+import com.example.android.attendmanage.pojos.Student;
 import com.example.android.attendmanage.pojos.Subject;
 import com.google.gson.Gson;
 
@@ -61,4 +62,18 @@ public class GsonUtils {
         }
     }
 
+    public static ArrayList<Student> extractStudentsFromJson(JSONObject jObj) {
+
+        try {
+            String recordsArray = jObj.getString("students");
+
+            Gson gson = new Gson();
+            Student[] targetArray = gson.fromJson(recordsArray, Student[].class);
+
+            return new ArrayList<>(Arrays.asList(targetArray));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

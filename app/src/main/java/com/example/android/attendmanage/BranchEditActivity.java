@@ -5,23 +5,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.android.attendmanage.adapter.SpinnerArrayAdapter;
 import com.example.android.attendmanage.pojos.Branch;
 import com.example.android.attendmanage.utilities.ExtraUtils;
-import com.example.android.attendmanage.volley.VolleyCallback;
 import com.example.android.attendmanage.volley.VolleyTask;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;

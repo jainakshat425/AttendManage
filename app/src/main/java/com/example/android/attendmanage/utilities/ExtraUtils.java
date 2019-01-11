@@ -3,7 +3,7 @@ package com.example.android.attendmanage.utilities;
 import android.content.Context;
 import android.widget.Spinner;
 
-import com.example.android.attendmanage.SpinnerArrayAdapter;
+import com.example.android.attendmanage.adapter.SpinnerArrayAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -55,6 +55,7 @@ public class ExtraUtils {
     public static final String EXTRA_BRANCH_OBJ = "extra_branch_obj";
     public static final String EXTRA_CLASS_OBJ = "extra_class_obj";
     public static final String EXTRA_SUBJECT_OBJ = "extra_subject_obj";
+    public static final String EXTRA_STUDENT_OBJ = "extra_student_obj";
 
     public static final String EXTRA_EDIT_MODE = "extra_edit_mode";
     public static final int MODE_UPDATE = 1;
@@ -66,6 +67,7 @@ public class ExtraUtils {
     public static final String ADMIN_LOGIN_URL = DB_URL + "adminLogin.php";
     public static final String GET_FACS_URL = DB_URL +"getFaculties.php";
     public static final String GET_BRANCH_NAMES_URL = DB_URL + "getBranchNames.php";
+    public static final String GET_SECS_URL = DB_URL + "getSections.php";
 
 
     public static final String DELETE_BRANCH_URL = DB_URL + "deleteBranch.php";
@@ -80,6 +82,9 @@ public class ExtraUtils {
     public static final String DELETE_SUBJECT_URL = DB_URL + "deleteSubject.php";
     public static final String SAVE_SUBJECT_URL = DB_URL + "saveSubject.php";
 
+    public static final String GET_STUDENTS_URL = DB_URL + "getStudents.php";
+    public static final String DELETE_STUDENT_URL = DB_URL + "deleteStudent.php";
+    public static final String SAVE_STUDENT_URL = DB_URL + "saveStudent.php";
 
 
 
@@ -94,7 +99,6 @@ public class ExtraUtils {
     public static final String DELETE_RECORD_URL = DB_URL + "deleteAttendRecord.php";
 
     public static final String GET_SEMS_URL = DB_URL + "getSemesters.php";
-    public static final String GET_SECS_URL = DB_URL + "getSections.php";
     public static final String GET_FAC_SCH_URL = DB_URL + "getFacSchedules.php";
     public static final String CHECK_VALID_CLASS_URL = DB_URL + "checkValidClass.php";
     public static final String GET_STD_REPORT_URL = DB_URL + "getStudentReport.php";

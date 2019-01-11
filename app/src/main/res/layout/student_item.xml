@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:paddingStart="4dp"
+    android:paddingTop="4dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="4dp">
+
+    <TextView
+        android:id="@+id/std_serial_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="4dp"
+        android:background="@drawable/blue_circle"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        tools:text="1" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="6dp"
+        android:layout_toEndOf="@id/std_serial_no"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/std_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:ellipsize="marquee"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            tools:text="Bhashit Joshi" />
+
+        <TextView
+            android:id="@+id/std_roll_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textAllCaps="true"
+            android:textStyle="bold|italic"
+            tools:text="16egjcs17" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/std_menu"
+        style="@style/popup_menu_iv"
+        app:srcCompat="@drawable/ic_menu"/>
+
+</RelativeLayout>
+

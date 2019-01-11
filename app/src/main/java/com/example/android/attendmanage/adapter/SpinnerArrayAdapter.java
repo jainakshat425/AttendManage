@@ -1,4 +1,4 @@
-package com.example.android.attendmanage;
+package com.example.android.attendmanage.adapter;
 
 import android.content.Context;
 import android.graphics.Color;

@@ -30,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, SubjectActivity.class));
     }
 
+    @OnClick(R.id.manage_student_main)
+    void startClassSelectActivity() {
+        startActivity(new Intent(MainActivity.this, ClassSelectActivity.class));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
