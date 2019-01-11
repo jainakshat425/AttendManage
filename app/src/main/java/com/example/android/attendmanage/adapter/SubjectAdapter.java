@@ -59,7 +59,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
         holder.bNameTv.setText(bName);
         holder.subFullNameTv.setText(String.format("%s (%s)", sFullName, sName));
 
-            holder.semesterTv.setText(ExtraUtils.getSemester(semester));
+        holder.semesterTv.setText(ExtraUtils.getSemester(semester));
 
         holder.menuButton.setTag(position);
         holder.menuButton.setOnClickListener(view -> {
@@ -107,7 +107,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
         this.notifyDataSetChanged();
     }
 
-    public class SubjectViewHolder extends RecyclerView.ViewHolder {
+    public class SubjectViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView bNameTv;
         private TextView subFullNameTv;
@@ -116,11 +116,18 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
 
         public SubjectViewHolder(View view) {
             super(view);
+            view.setOnClickListener(this);
             bNameTv = view.findViewById(R.id.sub_b_name);
             subFullNameTv = view.findViewById(R.id.sub_name);
             semesterTv = view.findViewById(R.id.sub_semester);
             menuButton = view.findViewById(R.id.sub_menu);
 
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (subFullNameTv.isSelected()) subFullNameTv.setSelected(false);
+            else subFullNameTv.setSelected(true);
         }
 
     }
