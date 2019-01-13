@@ -6,4 +6,6 @@
     <string name="password">Password</string>
     <string name="need_help">Need Help?</string>
     <string name="toast_login_successful">Login Successful</string>
+    <string name="to">to</string>
+    <string name="from">from</string>
 </resources>

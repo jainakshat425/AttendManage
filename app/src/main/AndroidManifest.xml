@@ -21,30 +21,40 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".BranchActivity"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".BranchEditActivity"
             android:parentActivityName=".BranchActivity" />
+
         <activity
             android:name=".ClassActivity"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ClassEditActivity"
             android:parentActivityName=".ClassActivity" />
+
         <activity
             android:name=".SubjectActivity"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".SubjectEditActivity"
             android:parentActivityName=".SubjectActivity" />
+
         <activity android:name=".ClassSelectActivity"
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".StudentActivity"
             android:parentActivityName=".ClassSelectActivity"/>
         <activity android:name=".StudentEditActivity"
             android:parentActivityName=".StudentActivity"/>
+
+        <activity android:name=".FacScheduleActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".FacSchEditActivity"
+            android:parentActivityName=".FacScheduleActivity"/>
+
     </application>
 
 </manifest>

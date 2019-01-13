@@ -56,6 +56,8 @@ public class ExtraUtils {
     public static final String EXTRA_CLASS_OBJ = "extra_class_obj";
     public static final String EXTRA_SUBJECT_OBJ = "extra_subject_obj";
     public static final String EXTRA_STUDENT_OBJ = "extra_student_obj";
+    public static final String EXTRA_FAC_SCH_OBJ = "extra_fac_sch_obj";
+
 
     public static final String EXTRA_EDIT_MODE = "extra_edit_mode";
     public static final int MODE_UPDATE = 1;
@@ -65,9 +67,11 @@ public class ExtraUtils {
     private static final String DB_URL = "http://192.168.43.156/attendmanagephp/v1/";
 
     public static final String ADMIN_LOGIN_URL = DB_URL + "adminLogin.php";
-    public static final String GET_FACS_URL = DB_URL +"getFaculties.php";
     public static final String GET_BRANCH_NAMES_URL = DB_URL + "getBranchNames.php";
     public static final String GET_SECS_URL = DB_URL + "getSections.php";
+    public static final String GET_FAC_USER_IDS = DB_URL + "getFacUserIds.php";
+    public static final String GET_SUBJECT_NAMES_URL = DB_URL + "getSubjectNames.php";
+
 
 
     public static final String DELETE_BRANCH_URL = DB_URL + "deleteBranch.php";
@@ -86,6 +90,12 @@ public class ExtraUtils {
     public static final String DELETE_STUDENT_URL = DB_URL + "deleteStudent.php";
     public static final String SAVE_STUDENT_URL = DB_URL + "saveStudent.php";
 
+    public static final String GET_FAC_SCH_URL = DB_URL + "getFacSchedules.php";
+    public static final String DELETE_FAC_SCH_URL = DB_URL + "deleteFacSch.php";
+    public static final String SAVE_FAC_SCH_URL = DB_URL + "saveFacSch.php";
+
+
+
 
 
 
@@ -99,7 +109,6 @@ public class ExtraUtils {
     public static final String DELETE_RECORD_URL = DB_URL + "deleteAttendRecord.php";
 
     public static final String GET_SEMS_URL = DB_URL + "getSemesters.php";
-    public static final String GET_FAC_SCH_URL = DB_URL + "getFacSchedules.php";
     public static final String CHECK_VALID_CLASS_URL = DB_URL + "checkValidClass.php";
     public static final String GET_STD_REPORT_URL = DB_URL + "getStudentReport.php";
 

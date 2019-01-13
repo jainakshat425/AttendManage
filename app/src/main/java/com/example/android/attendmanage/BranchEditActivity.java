@@ -74,9 +74,9 @@ public class BranchEditActivity extends AppCompatActivity {
             hodSelected = branch.getHodId();
         }
 
-        VolleyTask.setupHodSpinner(this, collId, jObj -> {
+        VolleyTask.getFacUserIds(this, collId, jObj -> {
             try {
-                JSONArray facJsonArr = jObj.getJSONArray("faculty");
+                JSONArray facJsonArr = jObj.getJSONArray("fac_user_ids");
                 List<String> facList = new ArrayList<>();
                 facList.add("Head Of Dept.");
                 for (int i = 0; i < facJsonArr.length(); i++) {
