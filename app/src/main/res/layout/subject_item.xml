@@ -52,10 +52,5 @@
             tools:text="5th Sem" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/sub_menu"
-        style="@style/popup_menu_iv"
-        app:srcCompat="@drawable/ic_menu"/>
-
 </RelativeLayout>
 

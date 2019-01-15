@@ -2,10 +2,12 @@ package com.example.android.attendmanage.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.attendmanage.BranchEditActivity;
@@ -18,7 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.PopupMenu;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ActionMode;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -28,6 +31,53 @@ public class BranchAdapter extends RecyclerView.Adapter<BranchAdapter.BranchView
 
     private Context mContext;
     private ArrayList<Branch> mBranches;
+
+    private boolean multiSelect = false;
+    private ArrayList<Branch> selectedItems = new ArrayList<>();
+
+    // Tracks current contextual action mode
+    private ActionMode currentActionMode;
+    // Define the callback when ActionMode is activated
+    private ActionMode.Callback modeCallBack = new ActionMode.Callback() {
+        // Called when the action mode is created; startActionMode() was called
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            multiSelect = true;
+            mode.setTitle("Actions");
+            mode.getMenuInflater().inflate(R.menu.action_mode, menu);
+            return true;
+        }
+
+        // Called each time the action mode is shown.
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false; // Return false if nothing is done
+        }
+
+        // Called when the user selects a contextual menu item
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            List<Integer> brIdList = new ArrayList<>();
+            for (Branch branch : selectedItems) {
+
+                mBranches.remove(branch);
+                brIdList.add(branch.getBranchId());
+
+            }
+            VolleyTask.deleteBranches(mContext, brIdList, jObj -> notifyDataSetChanged());
+            mode.finish();
+            return true;
+        }
+
+        // Called when the user exits the action mode
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            currentActionMode = null; // Clear current action mode
+            multiSelect = false;
+            selectedItems.clear();
+            notifyDataSetChanged();
+        }
+    };
 
     public BranchAdapter(Context context, ArrayList<Branch> branches) {
 
@@ -52,44 +102,19 @@ public class BranchAdapter extends RecyclerView.Adapter<BranchAdapter.BranchView
         String bName = branch.getBName();
         String bFullName = branch.getBFullName();
         String hodId = branch.getHodId();
-        int branchId = branch.getBranchId();
 
         holder.bNameTv.setText(bName);
         holder.bFullNameTv.setText(bFullName);
         if (hodId != null)
             holder.hodIdTv.setText(String.format("HOD: %s", hodId));
 
-        holder.menuButton.setTag(position);
-        holder.menuButton.setOnClickListener(view -> {
+        holder.itemView.setTag(position);
+        if (selectedItems.contains(branch)) {
+            holder.itemView.setBackgroundColor(Color.LTGRAY);
+        } else {
+            holder.itemView.setBackgroundColor(Color.WHITE);
+        }
 
-            PopupMenu popup = new PopupMenu(mContext, holder.menuButton);
-            popup.inflate(R.menu.opr_popup_menu);
-            popup.setOnMenuItemClickListener(item -> {
-
-                int pos = (int) view.getTag();
-                Branch selectedBranch = mBranches.get(pos);
-
-                switch (item.getItemId()) {
-                    case R.id.opr_update:
-                        Intent intent = new Intent(mContext, BranchEditActivity.class);
-                        intent.putExtra(ExtraUtils.EXTRA_BRANCH_OBJ, selectedBranch);
-                        intent.putExtra(ExtraUtils.EXTRA_EDIT_MODE, ExtraUtils.MODE_UPDATE);
-                        mContext.startActivity(intent);
-                        return true;
-                    case R.id.opr_delete:
-
-                        int bId = selectedBranch.getBranchId();
-                        VolleyTask.deleteBranch(mContext, bId, jObj -> {
-                            this.mBranches.remove(pos);
-                            this.notifyDataSetChanged();
-                        });
-                        return true;
-                    default:
-                        return false;
-                }
-            });
-            popup.show();
-        });
     }
 
     @Override
@@ -105,22 +130,63 @@ public class BranchAdapter extends RecyclerView.Adapter<BranchAdapter.BranchView
         this.notifyDataSetChanged();
     }
 
-    public class BranchViewHolder extends RecyclerView.ViewHolder {
+    public class BranchViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener, View.OnLongClickListener {
 
         private TextView bNameTv;
         private TextView bFullNameTv;
         private TextView hodIdTv;
-        private ImageView menuButton;
 
-        public BranchViewHolder(View view) {
+        BranchViewHolder(View view) {
             super(view);
+            view.setOnLongClickListener(this);
+            view.setOnClickListener(this);
             bNameTv = view.findViewById(R.id.branch_name);
             bFullNameTv = view.findViewById(R.id.branch_full_name);
             hodIdTv = view.findViewById(R.id.branch_hod);
-            menuButton = view.findViewById(R.id.branch_menu);
+
+        }
+        void selectItem(Branch item, View view) {
+            if (multiSelect) {
+                if (selectedItems.contains(item)) {
+                    selectedItems.remove(item);
+                    view.setBackgroundColor(Color.WHITE);
+                } else {
+                    selectedItems.add(item);
+                    view.setBackgroundColor(Color.LTGRAY);
+                }
+            }
+        }
+
+        @Override
+        public void onClick(View view) {
+            int pos = (int) view.getTag();
+            Branch branch = mBranches.get(pos);
+
+            if (currentActionMode != null) {
+
+                selectItem(branch, view);
+            } else {
+
+                Intent intent = new Intent(mContext, BranchEditActivity.class);
+                intent.putExtra(ExtraUtils.EXTRA_BRANCH_OBJ, branch);
+                intent.putExtra(ExtraUtils.EXTRA_EDIT_MODE, ExtraUtils.MODE_UPDATE);
+                mContext.startActivity(intent);
+            }
 
         }
 
+        @Override
+        public boolean onLongClick(View view) {
+
+            if (currentActionMode != null) return false;
+
+            currentActionMode = ((AppCompatActivity) mContext).startSupportActionMode(modeCallBack);
+            int pos = (int) view.getTag();
+            selectItem(mBranches.get(pos), view);
+
+            return true;
+        }
     }
 }
 

@@ -51,10 +51,5 @@
             tools:text="Section: A" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/class_menu"
-        style="@style/popup_menu_iv"
-        app:srcCompat="@drawable/ic_menu"/>
-
 </RelativeLayout>
 

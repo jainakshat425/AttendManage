@@ -9,19 +9,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.android.attendmanage.BranchEditActivity;
 import com.example.android.attendmanage.FacSchEditActivity;
-import com.example.android.attendmanage.FacScheduleActivity;
 import com.example.android.attendmanage.R;
-import com.example.android.attendmanage.pojos.Branch;
 import com.example.android.attendmanage.pojos.FacSchedule;
 import com.example.android.attendmanage.utilities.ExtraUtils;
-import com.example.android.attendmanage.volley.VolleyCallback;
 import com.example.android.attendmanage.volley.VolleyTask;
-
-import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -31,7 +24,6 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -74,7 +66,7 @@ public class FacSchAdapter extends RecyclerView.Adapter<FacSchAdapter.FacSchHold
                 lectIdList.add(schItem.getLectId());
 
             }
-            VolleyTask.deleteFacSch(mContext, lectIdList, jObj -> {
+            VolleyTask.deleteFacSchs(mContext, lectIdList, jObj -> {
                 notifyDataSetChanged();
             });
             mode.finish();

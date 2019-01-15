@@ -73,10 +73,10 @@ public class VolleyTask {
         RequestHandler.getInstance(context).addToRequestQueue(request);
     }
 
-    public static void deleteBranch(Context context, int branchId,
-                                    VolleyCallback volleyCallback) {
+    public static void deleteBranches(Context context, List<Integer> branchIdList,
+                                      VolleyCallback volleyCallback) {
         StringRequest request = new StringRequest(Request.Method.POST,
-                ExtraUtils.DELETE_BRANCH_URL,
+                ExtraUtils.DELETE_BRANCHES_URL,
                 response -> {
                     try {
                         JSONObject jObj = new JSONObject(response);
@@ -92,7 +92,8 @@ public class VolleyTask {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("branch_id", String.valueOf(branchId));
+                JSONArray jArr = new JSONArray(branchIdList);
+                params.put("branch_id_list", jArr.toString());
                 return params;
             }
         };
@@ -169,10 +170,10 @@ public class VolleyTask {
         RequestHandler.getInstance(context).addToRequestQueue(request);
     }
 
-    public static void deleteClass(Context context, int classId,
-                                   VolleyCallback volleyCallback) {
+    public static void deleteClasses(Context context, List<Integer> classIdList,
+                                     VolleyCallback volleyCallback) {
         StringRequest request = new StringRequest(Request.Method.POST,
-                ExtraUtils.DELETE_CLASS_URL,
+                ExtraUtils.DELETE_CLASSES_URL,
                 response -> {
                     try {
                         JSONObject jObj = new JSONObject(response);
@@ -188,7 +189,8 @@ public class VolleyTask {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("class_id", String.valueOf(classId));
+                JSONArray jArr = new JSONArray(classIdList);
+                params.put("class_id_list", jArr.toString());
                 return params;
             }
         };
@@ -328,10 +330,10 @@ public class VolleyTask {
         RequestHandler.getInstance(mContext).addToRequestQueue(request);
     }
 
-    public static void deleteSubject(Context context, int subId,
-                                     VolleyCallback volleyCallback) {
+    public static void deleteSubjects(Context context, List<Integer> subIdList,
+                                      VolleyCallback volleyCallback) {
         StringRequest request = new StringRequest(Request.Method.POST,
-                ExtraUtils.DELETE_SUBJECT_URL,
+                ExtraUtils.DELETE_SUBJECTS_URL,
                 response -> {
                     try {
                         JSONObject jObj = new JSONObject(response);
@@ -347,7 +349,8 @@ public class VolleyTask {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("sub_id", String.valueOf(subId));
+                JSONArray jArr = new JSONArray(subIdList);
+                params.put("sub_id_list", jArr.toString());
                 return params;
             }
         };
@@ -456,9 +459,9 @@ public class VolleyTask {
         RequestHandler.getInstance(mContext).addToRequestQueue(request);
     }
 
-    public static void deleteStudent(Context context, int stdId, VolleyCallback volleyCallback) {
+    public static void deleteStudents(Context context, List<Integer> stdIdList, VolleyCallback volleyCallback) {
         StringRequest request = new StringRequest(Request.Method.POST,
-                ExtraUtils.DELETE_STUDENT_URL,
+                ExtraUtils.DELETE_STUDENTS_URL,
                 response -> {
                     try {
                         JSONObject jObj = new JSONObject(response);
@@ -475,7 +478,8 @@ public class VolleyTask {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("student_id", String.valueOf(stdId));
+                JSONArray jArr = new JSONArray(stdIdList);
+                params.put("std_id_list", jArr.toString());
                 return params;
             }
         };
@@ -584,10 +588,10 @@ public class VolleyTask {
         RequestHandler.getInstance(mContext).addToRequestQueue(request);
     }
 
-    public static void deleteFacSch(Context context, List<Integer> lectIdList,
-                                    VolleyCallback volleyCallback) {
+    public static void deleteFacSchs(Context context, List<Integer> lectIdList,
+                                     VolleyCallback volleyCallback) {
         StringRequest request = new StringRequest(Request.Method.POST,
-                ExtraUtils.DELETE_FAC_SCH_URL,
+                ExtraUtils.DELETE_FAC_SCHS_URL,
                 response -> {
                     try {
                         JSONObject jObj = new JSONObject(response);

@@ -40,7 +40,7 @@
             android:ellipsize="marquee"
             android:textColor="@android:color/black"
             android:textSize="16sp"
-            tools:text="Bhashit Joshi" />
+            tools:text="Akshat Jain" />
 
         <TextView
             android:id="@+id/std_roll_no"
@@ -49,13 +49,8 @@
             android:textSize="14sp"
             android:textAllCaps="true"
             android:textStyle="bold|italic"
-            tools:text="16egjcs17" />
+            tools:text="16egjcs017" />
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/std_menu"
-        style="@style/popup_menu_iv"
-        app:srcCompat="@drawable/ic_menu"/>
 
 </RelativeLayout>
 

@@ -73,24 +73,24 @@ public class ExtraUtils {
     public static final String GET_FAC_USER_IDS = DB_URL + "getFacUserIds.php";
     public static final String GET_SUBJECT_NAMES_URL = DB_URL + "getSubjectNames.php";
 
-    public static final String DELETE_BRANCH_URL = DB_URL + "deleteBranch.php";
+    public static final String DELETE_BRANCHES_URL = DB_URL + "deleteBranches.php";
     public static final String GET_BRANCHES_URL = DB_URL + "getBranches.php";
     public static final String SAVE_BRANCH_URL = DB_URL + "saveBranch.php";
 
-    public static final String DELETE_CLASS_URL = DB_URL + "deleteClass.php";
+    public static final String DELETE_CLASSES_URL = DB_URL + "deleteClasses.php";
     public static final String GET_CLASSES_URL = DB_URL + "getClasses.php";
     public static final String SAVE_CLASS_URL = DB_URL + "saveClass.php";
 
     public static final String GET_SUBJECTS_URL = DB_URL + "getSubjects.php";
-    public static final String DELETE_SUBJECT_URL = DB_URL + "deleteSubject.php";
+    public static final String DELETE_SUBJECTS_URL = DB_URL + "deleteSubjects.php";
     public static final String SAVE_SUBJECT_URL = DB_URL + "saveSubject.php";
 
     public static final String GET_STUDENTS_URL = DB_URL + "getStudents.php";
-    public static final String DELETE_STUDENT_URL = DB_URL + "deleteStudent.php";
+    public static final String DELETE_STUDENTS_URL = DB_URL + "deleteStudents.php";
     public static final String SAVE_STUDENT_URL = DB_URL + "saveStudent.php";
 
     public static final String GET_FAC_SCH_URL = DB_URL + "getFacSchedules.php";
-    public static final String DELETE_FAC_SCH_URL = DB_URL + "deleteFacSch.php";
+    public static final String DELETE_FAC_SCHS_URL = DB_URL + "deleteFacSchs.php";
     public static final String SAVE_FAC_SCH_URL = DB_URL + "saveFacSch.php";
 
     public static final String GET_FACULTIES_URL = DB_URL + "getFaculties.php";
