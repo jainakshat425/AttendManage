@@ -11,7 +11,7 @@
     android:paddingBottom="4dp">
 
     <TextView
-        android:id="@+id/branch_name"
+        android:id="@+id/fac_dept"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -21,7 +21,7 @@
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:textColor="@android:color/white"
-        android:textSize="14sp"
+        android:textSize="16sp"
         tools:text="CS" />
 
     <LinearLayout
@@ -29,32 +29,38 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginStart="6dp"
-        android:layout_toEndOf="@id/branch_name"
+        android:layout_toEndOf="@id/fac_dept"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/branch_full_name"
+            android:id="@+id/fac_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="1dp"
             android:ellipsize="marquee"
             android:textColor="@android:color/black"
             android:textSize="16sp"
-            tools:text="Computer Science" />
+            tools:text="Teacher Name" />
 
         <TextView
-            android:id="@+id/branch_hod"
+            android:id="@+id/fac_mob_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            tools:text="7734392939" />
+
+        <TextView
+            android:id="@+id/fac_user_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:textStyle="bold|italic"
-            tools:text="HOD: Teacher" />
+            tools:text="Teacher@GTC" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/branch_menu"
-        style="@style/popup_menu_iv"
-        app:srcCompat="@drawable/ic_menu" />
 
 </RelativeLayout>
 

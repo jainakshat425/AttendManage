@@ -12,6 +12,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.android.attendmanage.BranchEditActivity;
 import com.example.android.attendmanage.ClassEditActivity;
 import com.example.android.attendmanage.FacSchEditActivity;
+import com.example.android.attendmanage.FacultyEditActivity;
 import com.example.android.attendmanage.SharedPrefManager;
 import com.example.android.attendmanage.StudentEditActivity;
 import com.example.android.attendmanage.SubjectEditActivity;
@@ -24,8 +25,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import androidx.appcompat.view.ActionMode;
 
 /**
  * Created by Akshat Jain on 06-Jan-19.
@@ -680,5 +679,99 @@ public class VolleyTask {
         };
         RequestHandler.getInstance(mContext).addToRequestQueue(request);
 
+    }
+
+    public static void getFaculties(final Context mContext, final int collId,
+                                   VolleyCallback callback) {
+        StringRequest request = new StringRequest(Request.Method.POST,
+                ExtraUtils.GET_FACULTIES_URL,
+                response -> {
+                    try {
+                        JSONObject jObj = new JSONObject(response);
+
+                        if (!jObj.getBoolean("error")) {
+                            callback.onSuccessResponse(jObj);
+                        } else {
+                            Toast.makeText(mContext,
+                                    jObj.getString("message"),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }, error -> {
+            Toast.makeText(mContext, error.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("college_id", String.valueOf(collId));
+                return params;
+            }
+        };
+        RequestHandler.getInstance(mContext).addToRequestQueue(request);
+    }
+
+    public static void deleteFaculties(Context context, List<Integer> facIdList,
+                                    VolleyCallback volleyCallback) {
+        StringRequest request = new StringRequest(Request.Method.POST,
+                ExtraUtils.DELETE_FACULTY_URL,
+                response -> {
+                    try {
+                        JSONObject jObj = new JSONObject(response);
+                        if (!jObj.getBoolean("error")) {
+                            volleyCallback.onSuccessResponse(jObj);
+                        }
+                        Toast.makeText(context, jObj.getString("message"),
+                                Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }, error -> Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show()) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                JSONArray jArr = new JSONArray(facIdList);
+                params.put("fac_id_list", jArr.toString());
+                return params;
+            }
+        };
+        RequestHandler.getInstance(context).addToRequestQueue(request);
+    }
+
+    public static void saveFaculty(Context context, int collId, String facJson) {
+        ProgressDialog pDialog = new ProgressDialog(context);
+        pDialog.setMessage("Saving...");
+        pDialog.show();
+        StringRequest request = new StringRequest(Request.Method.POST,
+                ExtraUtils.SAVE_FACULTY_URL,
+                response -> {
+                    try {
+                        JSONObject jObj = new JSONObject(response);
+                        Toast.makeText(context,
+                                jObj.getString("message"),
+                                Toast.LENGTH_SHORT).show();
+                        if (!jObj.getBoolean("error"))
+                            ((FacultyEditActivity) context).finish();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    pDialog.dismiss();
+                }, error -> {
+            Toast.makeText(context, error.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("college_id", String.valueOf(collId));
+                params.put("faculty_obj", facJson);
+                return params;
+            }
+        };
+        RequestHandler.getInstance(context).addToRequestQueue(request);
     }
 }

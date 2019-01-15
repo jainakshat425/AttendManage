@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,7 +22,7 @@
                 <ImageView
                     android:id="@+id/iv_branch"
                     style="@style/main_image_view"
-                    android:src="@drawable/ic_branch" />
+                    app:srcCompat="@drawable/ic_branch" />
 
                 <TextView
                     style="@style/main_textview"
@@ -38,7 +38,7 @@
                 <ImageView
                     android:id="@+id/iv_class"
                     style="@style/main_image_view"
-                    android:src="@drawable/ic_class" />
+                    app:srcCompat="@drawable/ic_class" />
 
                 <TextView
                     style="@style/main_textview"
@@ -56,7 +56,7 @@
                 <ImageView
                     android:id="@+id/iv_student"
                     style="@style/main_image_view"
-                    android:src="@drawable/ic_student" />
+                    app:srcCompat="@drawable/ic_student" />
 
                 <TextView
                     style="@style/main_textview"
@@ -72,7 +72,7 @@
                 <ImageView
                     android:id="@+id/iv_faculty"
                     style="@style/main_image_view"
-                    android:src="@drawable/ic_faculties" />
+                    app:srcCompat="@drawable/ic_faculties" />
 
                 <TextView
                     style="@style/main_textview"
@@ -90,7 +90,7 @@
                 <ImageView
                     android:id="@+id/iv_subject"
                     style="@style/main_image_view"
-                    android:src="@drawable/ic_subject" />
+                    app:srcCompat="@drawable/ic_subject" />
 
                 <TextView
                     style="@style/main_textview"
@@ -98,26 +98,6 @@
                     android:text="Manage Subject(s)" />
 
             </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/check_reports_main"
-                style="@style/main_card_container">
-
-                <ImageView
-                    android:id="@+id/iv_report"
-                    style="@style/main_image_view"
-                    android:src="@drawable/ic_report" />
-
-
-                <TextView
-                    style="@style/main_textview"
-                    android:layout_below="@id/iv_report"
-                    android:text="Check Report" />
-            </RelativeLayout>
-        </LinearLayout>
-
-        <LinearLayout style="@style/main_container">
-
             <RelativeLayout
                 android:id="@+id/manage_fac_sch_main"
                 style="@style/main_card_container">
@@ -125,29 +105,13 @@
                 <ImageView
                     android:id="@+id/iv_fac_sch"
                     style="@style/main_image_view"
-                    android:src="@drawable/ic_schedule_fac" />
-
+                    app:srcCompat="@drawable/ic_schedule" />
 
                 <TextView
                     style="@style/main_textview"
                     android:layout_below="@id/iv_fac_sch"
                     android:text="Faculty Schedule" />
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/manage_std_sch_main"
-                style="@style/main_card_container">
-
-                <ImageView
-                    android:id="@+id/iv_std_sch"
-                    style="@style/main_image_view"
-                    android:src="@drawable/ic_schedule2" />
-
-                <TextView
-                    style="@style/main_textview"
-                    android:layout_below="@id/iv_std_sch"
-                    android:text="Student Schedule" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

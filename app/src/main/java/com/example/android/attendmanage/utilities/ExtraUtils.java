@@ -57,6 +57,7 @@ public class ExtraUtils {
     public static final String EXTRA_SUBJECT_OBJ = "extra_subject_obj";
     public static final String EXTRA_STUDENT_OBJ = "extra_student_obj";
     public static final String EXTRA_FAC_SCH_OBJ = "extra_fac_sch_obj";
+    public static final String EXTRA_FACULTY_OBJ = "extra_faculty_obj";
 
 
     public static final String EXTRA_EDIT_MODE = "extra_edit_mode";
@@ -71,8 +72,6 @@ public class ExtraUtils {
     public static final String GET_SECS_URL = DB_URL + "getSections.php";
     public static final String GET_FAC_USER_IDS = DB_URL + "getFacUserIds.php";
     public static final String GET_SUBJECT_NAMES_URL = DB_URL + "getSubjectNames.php";
-
-
 
     public static final String DELETE_BRANCH_URL = DB_URL + "deleteBranch.php";
     public static final String GET_BRANCHES_URL = DB_URL + "getBranches.php";
@@ -94,23 +93,9 @@ public class ExtraUtils {
     public static final String DELETE_FAC_SCH_URL = DB_URL + "deleteFacSch.php";
     public static final String SAVE_FAC_SCH_URL = DB_URL + "saveFacSch.php";
 
-
-
-
-
-
-    public static final String GET_ATT_REC_URL = DB_URL + "getAttendanceRecords.php";
-    public static final String GET_SUB_NAME_URL = DB_URL + "getSubjectsName.php";
-    public static final String CHECK_ATTEND_ALREADY_EXIST = DB_URL + "checkAttendAlreadyExist.php";
-    public static final String SETUP_NEW_ATTEND_URL = DB_URL + "setupNewAttendance.php";
-    public static final String SETUP_UPDATE_ATTEND_URL = DB_URL + "setupUpdateAttendance.php";
-    public static final String SAVE_NEW_ATTEND_URL = DB_URL + "saveNewAttendance.php";
-    public static final String UPDATE_ATTEND_URL = DB_URL + "updateAttendance.php";
-    public static final String DELETE_RECORD_URL = DB_URL + "deleteAttendRecord.php";
-
-    public static final String GET_SEMS_URL = DB_URL + "getSemesters.php";
-    public static final String CHECK_VALID_CLASS_URL = DB_URL + "checkValidClass.php";
-    public static final String GET_STD_REPORT_URL = DB_URL + "getStudentReport.php";
+    public static final String GET_FACULTIES_URL = DB_URL + "getFaculties.php";
+    public static final String DELETE_FACULTY_URL = DB_URL + "deleteFaculties.php";
+    public static final String SAVE_FACULTY_URL = DB_URL + "saveFaculty.php";
 
 
     public static String getLecture(String lecture) {

@@ -55,6 +55,11 @@
         <activity android:name=".FacSchEditActivity"
             android:parentActivityName=".FacScheduleActivity"/>
 
+        <activity android:name=".FacultyActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".FacultyEditActivity"
+            android:parentActivityName=".FacultyActivity"/>
+
     </application>
 
 </manifest>

@@ -52,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, ClassSelectActivity.class));
     }
 
+    @OnClick(R.id.manage_fac_main)
+    void startFacultyActivity() {
+        startActivity(new Intent(MainActivity.this, FacultyActivity.class));
+    }
+
     @OnClick(R.id.manage_fac_sch_main)
     void startFacSchManageActivity() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);

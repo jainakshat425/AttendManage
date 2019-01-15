@@ -31,22 +31,14 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login_button);
         needHelpButton = findViewById(R.id.need_help_button);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
+        loginButton.setOnClickListener(v -> login());
 
-        needHelpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent needHelpIntent = new Intent(Intent.ACTION_SEND);
-                needHelpIntent.setType("text/html");
-                needHelpIntent.putExtra(Intent.EXTRA_SUBJECT, "Need Help");
-                needHelpIntent.putExtra(Intent.EXTRA_TEXT, "Describe the problem");
-                startActivity(Intent.createChooser(needHelpIntent, "Send Email..."));
-            }
+        needHelpButton.setOnClickListener(v -> {
+            Intent needHelpIntent = new Intent(Intent.ACTION_SEND);
+            needHelpIntent.setType("text/html");
+            needHelpIntent.putExtra(Intent.EXTRA_SUBJECT, "Need Help");
+            needHelpIntent.putExtra(Intent.EXTRA_TEXT, "Describe the problem");
+            startActivity(Intent.createChooser(needHelpIntent, "Send Email..."));
         });
     }
 
@@ -54,26 +46,23 @@ public class LoginActivity extends AppCompatActivity {
         final String username = usernameEditText.getText().toString().trim();
         final String password = passwordEditText.getText().toString().trim();
 
-        VolleyTask.login(this, username, password, new VolleyCallback() {
-            @Override
-            public void onSuccessResponse(JSONObject jObj) {
-                try {
-                    Toast.makeText(LoginActivity.this, jObj.getString("message"),
-                            Toast.LENGTH_SHORT).show();
-                    int collId = jObj.getInt(SharedPrefManager.COLL_ID);
-                    String collName = jObj.getString(SharedPrefManager.COLL_NAME);
-                    String collFullName = jObj.getString(SharedPrefManager.COLL_FULL_NAME);
-                    String adminId = jObj.getString(SharedPrefManager.ADMIN_ID);
+        VolleyTask.login(this, username, password, jObj -> {
+            try {
+                Toast.makeText(LoginActivity.this, jObj.getString("message"),
+                        Toast.LENGTH_SHORT).show();
+                int collId = jObj.getInt(SharedPrefManager.COLL_ID);
+                String collName = jObj.getString(SharedPrefManager.COLL_NAME);
+                String collFullName = jObj.getString(SharedPrefManager.COLL_FULL_NAME);
+                String adminId = jObj.getString(SharedPrefManager.ADMIN_ID);
 
-                    boolean saved = SharedPrefManager.getInstance(LoginActivity.this)
-                            .saveAdminDetails(collId, collName, collFullName, adminId);
-                    if (saved) {
-                        finish();
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                boolean saved = SharedPrefManager.getInstance(LoginActivity.this)
+                        .saveAdminDetails(collId, collName, collFullName, adminId);
+                if (saved) {
+                    finish();
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         });
     }
