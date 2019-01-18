@@ -13,8 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:label="Manage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,44 +22,65 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".LoginActivity"
+            android:label="Login"/>
+
+        <activity android:name=".RegisterActivity"
+            android:label="Register"
+            android:parentActivityName=".LoginActivity"/>
+
         <activity
             android:name=".BranchActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:label="Branches"/>
         <activity
-            android:name=".BranchEditActivity"
-            android:parentActivityName=".BranchActivity" />
-
+            android:name=".editActivities.BranchEditActivity"
+            android:parentActivityName=".BranchActivity"
+            android:label="Edit Branch"/>
         <activity
             android:name=".ClassActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:label="Classes"/>
         <activity
-            android:name=".ClassEditActivity"
-            android:parentActivityName=".ClassActivity" />
-
+            android:name=".editActivities.ClassEditActivity"
+            android:parentActivityName=".ClassActivity"
+            android:label="Edit Class"/>
         <activity
             android:name=".SubjectActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:label="Subjects"/>
         <activity
-            android:name=".SubjectEditActivity"
-            android:parentActivityName=".SubjectActivity" />
-
-        <activity android:name=".ClassSelectActivity"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".StudentActivity"
-            android:parentActivityName=".ClassSelectActivity"/>
-        <activity android:name=".StudentEditActivity"
-            android:parentActivityName=".StudentActivity"/>
-
-        <activity android:name=".FacScheduleActivity"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".FacSchEditActivity"
-            android:parentActivityName=".FacScheduleActivity"/>
-
-        <activity android:name=".FacultyActivity"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".FacultyEditActivity"
-            android:parentActivityName=".FacultyActivity"/>
-
+            android:name=".editActivities.SubjectEditActivity"
+            android:parentActivityName=".SubjectActivity"
+            android:label="Edit Subject"/>
+        <activity
+            android:name=".ClassSelectActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="Select Class"/>
+        <activity
+            android:name=".StudentActivity"
+            android:parentActivityName=".ClassSelectActivity"
+            android:label="Students"/>
+        <activity
+            android:name=".editActivities.StudentEditActivity"
+            android:parentActivityName=".StudentActivity"
+            android:label="Edit Student"/>
+        <activity
+            android:name=".FacScheduleActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="Schedule"/>
+        <activity
+            android:name=".editActivities.FacSchEditActivity"
+            android:parentActivityName=".FacScheduleActivity"
+            android:label="Edit Lecture"/>
+        <activity
+            android:name=".FacultyActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="Faculties"/>
+        <activity
+            android:name=".editActivities.FacultyEditActivity"
+            android:parentActivityName=".FacultyActivity"
+            android:label="Edit Faculty"/>
     </application>
 
 </manifest>

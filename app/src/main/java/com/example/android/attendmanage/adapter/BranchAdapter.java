@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.attendmanage.BranchEditActivity;
+import com.example.android.attendmanage.editActivities.BranchEditActivity;
 import com.example.android.attendmanage.R;
 import com.example.android.attendmanage.pojos.Branch;
 import com.example.android.attendmanage.utilities.ExtraUtils;

@@ -10,21 +10,25 @@ import butterknife.OnClick;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.example.android.attendmanage.adapter.BranchAdapter;
+import com.example.android.attendmanage.editActivities.BranchEditActivity;
 import com.example.android.attendmanage.pojos.Branch;
 import com.example.android.attendmanage.utilities.ExtraUtils;
 import com.example.android.attendmanage.utilities.GsonUtils;
 import com.example.android.attendmanage.volley.VolleyTask;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BranchActivity extends AppCompatActivity {
 
     @BindView(R.id.branch_rv)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.branch_empty_view)
+    RelativeLayout emptyView;
 
     private BranchAdapter mAdapter;
     int collegeId;
@@ -53,18 +57,25 @@ public class BranchActivity extends AppCompatActivity {
         mRecyclerView.addItemDecoration(divider);
         mRecyclerView.setAdapter(mAdapter);
 
+        refreshList();
+    }
+
+    private void refreshList() {
         VolleyTask.getBranches(this, collegeId, jObj -> {
             ArrayList<Branch> branches = GsonUtils.extractBranchesFromJson(jObj);
-            mAdapter.swapList(branches);
+            if (branches != null && branches.size() > 0) {
+                mAdapter.swapList(branches);
+                emptyView.setVisibility(View.GONE);
+            } else {
+                emptyView.setVisibility(View.VISIBLE);
+            }
+
         });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        VolleyTask.getBranches(this, collegeId, jObj -> {
-            ArrayList<Branch> branches = GsonUtils.extractBranchesFromJson(jObj);
-            mAdapter.swapList(branches);
-        });
+       refreshList();
     }
 }

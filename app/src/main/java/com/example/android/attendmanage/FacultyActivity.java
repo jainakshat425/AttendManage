@@ -2,11 +2,12 @@ package com.example.android.attendmanage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.example.android.attendmanage.adapter.FacultyAdapter;
-import com.example.android.attendmanage.adapter.SubjectAdapter;
+import com.example.android.attendmanage.editActivities.FacultyEditActivity;
 import com.example.android.attendmanage.pojos.Faculty;
-import com.example.android.attendmanage.pojos.Subject;
 import com.example.android.attendmanage.utilities.ExtraUtils;
 import com.example.android.attendmanage.utilities.GsonUtils;
 import com.example.android.attendmanage.volley.VolleyTask;
@@ -25,6 +26,9 @@ public class FacultyActivity extends AppCompatActivity {
 
     @BindView(R.id.fac_rv)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.faculty_empty_view)
+    RelativeLayout emptyView;
 
     private FacultyAdapter mAdapter;
     int collegeId;
@@ -59,7 +63,12 @@ public class FacultyActivity extends AppCompatActivity {
     private void refreshList() {
         VolleyTask.getFaculties(this, collegeId, jObj -> {
             ArrayList<Faculty> faculties = GsonUtils.extractFacultiesFromJson(jObj);
-            mAdapter.swapList(faculties);
+            if (faculties != null && faculties.size() > 0) {
+                mAdapter.swapList(faculties);
+                emptyView.setVisibility(View.GONE);
+            } else {
+                emptyView.setVisibility(View.VISIBLE);
+            }
         });
     }
 

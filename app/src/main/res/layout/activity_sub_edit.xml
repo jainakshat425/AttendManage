@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/sub_edit_layout"
     android:padding="4dp"
-    tools:context=".SubjectEditActivity">
+    tools:context=".editActivities.SubjectEditActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/sub_name_input"
@@ -38,24 +39,29 @@
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="32dp"
-        android:orientation="horizontal">
-        <!-- semester field -->
+    <LinearLayout style="@style/SpinnerLayoutContainer"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            style="@style/SpinnerTextStyle"
+            android:text="Semester" />
+
         <Spinner
             android:id="@+id/sub_semester_spin"
-            style="@style/SpinnerStyle"
-            android:layout_marginEnd="4dp" />
-        <!-- branch field -->
+            style="@style/SpinnerStyle" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/SpinnerLayoutContainer">
+
+        <TextView
+            style="@style/SpinnerTextStyle"
+            android:text="Branch" />
+
         <Spinner
             android:id="@+id/sub_branch_spin"
             style="@style/SpinnerStyle" />
-
     </LinearLayout>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/sub_edit_done_fab"

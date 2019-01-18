@@ -8,16 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.android.attendmanage.FacSchEditActivity;
-import com.example.android.attendmanage.FacultyEditActivity;
+import com.example.android.attendmanage.editActivities.FacultyEditActivity;
 import com.example.android.attendmanage.R;
-import com.example.android.attendmanage.SubjectEditActivity;
-import com.example.android.attendmanage.pojos.FacSchedule;
 import com.example.android.attendmanage.pojos.Faculty;
-import com.example.android.attendmanage.pojos.Subject;
 import com.example.android.attendmanage.utilities.ExtraUtils;
 import com.example.android.attendmanage.volley.VolleyTask;
 
@@ -27,7 +22,6 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**

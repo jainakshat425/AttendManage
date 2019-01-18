@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.attendmanage.R;
-import com.example.android.attendmanage.StudentEditActivity;
+import com.example.android.attendmanage.editActivities.StudentEditActivity;
 import com.example.android.attendmanage.pojos.Student;
 import com.example.android.attendmanage.utilities.ExtraUtils;
 import com.example.android.attendmanage.volley.VolleyTask;

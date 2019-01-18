@@ -6,16 +6,14 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.android.attendmanage.BranchEditActivity;
-import com.example.android.attendmanage.ClassEditActivity;
-import com.example.android.attendmanage.FacSchEditActivity;
-import com.example.android.attendmanage.FacultyEditActivity;
+import com.example.android.attendmanage.editActivities.BranchEditActivity;
+import com.example.android.attendmanage.editActivities.ClassEditActivity;
+import com.example.android.attendmanage.editActivities.FacSchEditActivity;
+import com.example.android.attendmanage.editActivities.FacultyEditActivity;
 import com.example.android.attendmanage.SharedPrefManager;
-import com.example.android.attendmanage.StudentEditActivity;
-import com.example.android.attendmanage.SubjectEditActivity;
+import com.example.android.attendmanage.editActivities.StudentEditActivity;
+import com.example.android.attendmanage.editActivities.SubjectEditActivity;
 import com.example.android.attendmanage.utilities.ExtraUtils;
 
 import org.json.JSONArray;
@@ -33,31 +31,27 @@ public class VolleyTask {
 
     public static void login(final Context context, final String username, final String password,
                              final VolleyCallback volleyCallback) {
+        ProgressDialog pDialog = new ProgressDialog(context);
+        pDialog.setMessage("Logging in...");
+        pDialog.show();
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.ADMIN_LOGIN_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+                response -> {
+                    pDialog.dismiss();
+                    try {
+                        JSONObject jObj = new JSONObject(response);
 
-                        try {
-                            JSONObject jObj = new JSONObject(response);
-
-                            if (!jObj.getBoolean("error")) {
-                                volleyCallback.onSuccessResponse(jObj);
-                            } else {
-                                Toast.makeText(context, jObj.getString("message"),
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        if (!jObj.getBoolean("error")) {
+                            volleyCallback.onSuccessResponse(jObj);
                         }
+                        Toast.makeText(context, jObj.getString("message"),
+                                Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
-            }
+                }, error -> {
+            pDialog.dismiss();
+            Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
@@ -75,9 +69,13 @@ public class VolleyTask {
 
     public static void deleteBranches(Context context, List<Integer> branchIdList,
                                       VolleyCallback volleyCallback) {
+        ProgressDialog pDialog = new ProgressDialog(context);
+        pDialog.setMessage("Deleting...");
+        pDialog.show();
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.DELETE_BRANCHES_URL,
                 response -> {
+            pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
                         if (!jObj.getBoolean("error")) {
@@ -88,7 +86,10 @@ public class VolleyTask {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }, error -> Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show()) {
+                }, error -> {
+            pDialog.dismiss();
+            Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -102,9 +103,13 @@ public class VolleyTask {
 
     public static void getBranches(final Context mContext, final int collId,
                                    VolleyCallback callback) {
+        ProgressDialog pDialog = new ProgressDialog(mContext);
+        pDialog.setMessage("Loading...");
+        pDialog.show();
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.GET_BRANCHES_URL,
                 response -> {
+            pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
 
@@ -119,6 +124,7 @@ public class VolleyTask {
                         e.printStackTrace();
                     }
                 }, error -> {
+            pDialog.dismiss();
             Toast.makeText(mContext, error.getMessage(),
                     Toast.LENGTH_LONG).show();
         }) {
@@ -172,9 +178,13 @@ public class VolleyTask {
 
     public static void deleteClasses(Context context, List<Integer> classIdList,
                                      VolleyCallback volleyCallback) {
+        ProgressDialog pDialog = new ProgressDialog(context);
+        pDialog.setMessage("Deleting...");
+        pDialog.show();
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.DELETE_CLASSES_URL,
                 response -> {
+            pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
                         if (!jObj.getBoolean("error")) {
@@ -185,7 +195,10 @@ public class VolleyTask {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }, error -> Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show()) {
+                }, error -> {
+            pDialog.dismiss();
+            Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -199,9 +212,13 @@ public class VolleyTask {
 
     public static void getClasses(final Context mContext, final int collId,
                                   VolleyCallback callback) {
+        ProgressDialog pDialog = new ProgressDialog(mContext);
+        pDialog.setMessage("Loading...");
+        pDialog.show();
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.GET_CLASSES_URL,
                 response -> {
+            pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
 
@@ -216,6 +233,7 @@ public class VolleyTask {
                         e.printStackTrace();
                     }
                 }, error -> {
+            pDialog.dismiss();
             Toast.makeText(mContext, error.getMessage(),
                     Toast.LENGTH_LONG).show();
         }) {
@@ -266,8 +284,8 @@ public class VolleyTask {
         RequestHandler.getInstance(context).addToRequestQueue(request);
     }
 
-    public static void setupBranchSpinner(Context context, int collegeId,
-                                          VolleyCallback volleyCallback) {
+    public static void getBranchNames(Context context, int collegeId,
+                                      VolleyCallback volleyCallback) {
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.GET_BRANCH_NAMES_URL,
                 response -> {
@@ -332,9 +350,13 @@ public class VolleyTask {
 
     public static void deleteSubjects(Context context, List<Integer> subIdList,
                                       VolleyCallback volleyCallback) {
+        ProgressDialog pDialog = new ProgressDialog(context);
+        pDialog.setMessage("Deleting...");
+        pDialog.show();
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.DELETE_SUBJECTS_URL,
                 response -> {
+            pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
                         if (!jObj.getBoolean("error")) {
@@ -345,7 +367,10 @@ public class VolleyTask {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }, error -> Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show()) {
+                }, error -> {
+            pDialog.dismiss();
+            Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -395,8 +420,8 @@ public class VolleyTask {
     }
 
     public static void getSections(final Context mContext, final String branch,
-                                           final String semester, final int collId,
-                                           VolleyCallback callback) {
+                                   final String semester, final int collId,
+                                   VolleyCallback callback) {
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.GET_SECS_URL, response -> {
             try {
@@ -427,10 +452,14 @@ public class VolleyTask {
 
     }
 
-    public static void getStudents(final Context mContext, final int collId, final String semester,
-                                   final String branch, final String section, VolleyCallback callback) {
+    public static void getStudents(final Context mContext, int collId, String semester, String branch,
+                                   String section, VolleyCallback callback) {
+        ProgressDialog pDialog = new ProgressDialog(mContext);
+        pDialog.setMessage("Loading...");
+        pDialog.show();
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.GET_STUDENTS_URL, response -> {
+            pDialog.dismiss();
             try {
                 JSONObject jObj = new JSONObject(response);
 
@@ -444,8 +473,11 @@ public class VolleyTask {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> Toast.makeText(mContext, error.getMessage(),
-                Toast.LENGTH_LONG).show()) {
+        }, error -> {
+            pDialog.dismiss();
+            Toast.makeText(mContext, error.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -460,9 +492,13 @@ public class VolleyTask {
     }
 
     public static void deleteStudents(Context context, List<Integer> stdIdList, VolleyCallback volleyCallback) {
+        ProgressDialog pDialog = new ProgressDialog(context);
+        pDialog.setMessage("Deleting...");
+        pDialog.show();
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.DELETE_STUDENTS_URL,
                 response -> {
+            pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
                         if (!jObj.getBoolean("error")) {
@@ -473,8 +509,10 @@ public class VolleyTask {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }, error ->
-                Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show()) {
+                }, error -> {
+            pDialog.dismiss();
+            Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -524,7 +562,7 @@ public class VolleyTask {
     }
 
     public static void getFacUserIds(final Context mContext, final int collId,
-                                   VolleyCallback callback) {
+                                     VolleyCallback callback) {
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.GET_FAC_USER_IDS,
                 response -> {
@@ -556,10 +594,14 @@ public class VolleyTask {
     }
 
     public static void getFacSchedule(final Context mContext, final String facUserId, final String day,
-                                   VolleyCallback callback) {
+                                      VolleyCallback callback) {
+        ProgressDialog pDialog = new ProgressDialog(mContext);
+        pDialog.setMessage("Loading...");
+        pDialog.show();
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.GET_FAC_SCH_URL,
                 response -> {
+            pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
 
@@ -574,6 +616,7 @@ public class VolleyTask {
                         e.printStackTrace();
                     }
                 }, error -> {
+            pDialog.dismiss();
             Toast.makeText(mContext, error.getMessage(),
                     Toast.LENGTH_LONG).show();
         }) {
@@ -590,9 +633,13 @@ public class VolleyTask {
 
     public static void deleteFacSchs(Context context, List<Integer> lectIdList,
                                      VolleyCallback volleyCallback) {
+        ProgressDialog pDialog = new ProgressDialog(context);
+        pDialog.setMessage("Deleting...");
+        pDialog.show();
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.DELETE_FAC_SCHS_URL,
                 response -> {
+            pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
                         if (!jObj.getBoolean("error")) {
@@ -603,7 +650,10 @@ public class VolleyTask {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }, error -> Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show()) {
+                }, error -> {
+            pDialog.dismiss();
+            Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -622,6 +672,7 @@ public class VolleyTask {
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.SAVE_FAC_SCH_URL,
                 response -> {
+                    pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
                         Toast.makeText(context,
@@ -633,8 +684,8 @@ public class VolleyTask {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    pDialog.dismiss();
                 }, error -> {
+            pDialog.dismiss();
             Toast.makeText(context, error.getMessage(),
                     Toast.LENGTH_LONG).show();
         }) {
@@ -653,8 +704,8 @@ public class VolleyTask {
     }
 
     public static void getSubjectNames(final Context mContext, final String branch,
-                                   final String semester, final int collId,
-                                   VolleyCallback callback) {
+                                       final String semester, final int collId,
+                                       VolleyCallback callback) {
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.GET_SUBJECT_NAMES_URL, response -> {
             try {
@@ -686,7 +737,7 @@ public class VolleyTask {
     }
 
     public static void getFaculties(final Context mContext, final int collId,
-                                   VolleyCallback callback) {
+                                    VolleyCallback callback) {
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.GET_FACULTIES_URL,
                 response -> {
@@ -718,10 +769,14 @@ public class VolleyTask {
     }
 
     public static void deleteFaculties(Context context, List<Integer> facIdList,
-                                    VolleyCallback volleyCallback) {
+                                       VolleyCallback volleyCallback) {
+        ProgressDialog pDialog = new ProgressDialog(context);
+        pDialog.setMessage("Deleting...");
+        pDialog.show();
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.DELETE_FACULTY_URL,
                 response -> {
+            pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
                         if (!jObj.getBoolean("error")) {
@@ -732,7 +787,10 @@ public class VolleyTask {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }, error -> Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show()) {
+                }, error -> {
+            pDialog.dismiss();
+            Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -751,6 +809,7 @@ public class VolleyTask {
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.SAVE_FACULTY_URL,
                 response -> {
+                    pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
                         Toast.makeText(context,
@@ -762,8 +821,9 @@ public class VolleyTask {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    pDialog.dismiss();
+
                 }, error -> {
+            pDialog.dismiss();
             Toast.makeText(context, error.getMessage(),
                     Toast.LENGTH_LONG).show();
         }) {
@@ -773,6 +833,47 @@ public class VolleyTask {
 
                 params.put("college_id", String.valueOf(collId));
                 params.put("faculty_obj", facJson);
+                return params;
+            }
+        };
+        RequestHandler.getInstance(context).addToRequestQueue(request);
+    }
+
+    public static void registerCollege(Context context, String email,
+                                       String pass, String collName,
+                                       String collFullName, VolleyCallback callback) {
+        ProgressDialog pDialog = new ProgressDialog(context);
+        pDialog.setMessage("Registering...");
+        pDialog.show();
+        StringRequest request = new StringRequest(Request.Method.POST,
+                ExtraUtils.REGISTER_URL,
+                response -> {
+                    pDialog.dismiss();
+                    try {
+                        JSONObject jObj = new JSONObject(response);
+                        Toast.makeText(context, jObj.getString("message"),
+                                Toast.LENGTH_SHORT).show();
+                        if (!jObj.getBoolean("error")) {
+                            callback.onSuccessResponse(jObj);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }, error -> {
+            pDialog.dismiss();
+            Toast.makeText(context, error.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("email", email);
+                params.put("password", pass);
+                params.put("coll_name", collName);
+                params.put("coll_full_name", collFullName);
+
                 return params;
             }
         };

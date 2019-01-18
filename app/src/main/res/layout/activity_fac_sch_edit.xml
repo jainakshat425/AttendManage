@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/fac_sch_edit_layout"
     android:padding="4dp"
-    tools:context=".FacSchEditActivity">
+    tools:context=".editActivities.FacSchEditActivity">
 
     <ca.antonious.materialdaypicker.MaterialDayPicker
         android:id="@+id/fse_day_pick"

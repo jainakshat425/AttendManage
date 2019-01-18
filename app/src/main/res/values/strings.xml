@@ -6,6 +6,22 @@
     <string name="password">Password</string>
     <string name="need_help">Need Help?</string>
     <string name="toast_login_successful">Login Successful</string>
+
     <string name="to">to</string>
     <string name="from">from</string>
+
+    <string name="click_button_below_to_add_new_branch">Click button below to add new branch.</string>
+    <string name="click_button_below_to_add_new_class">Click button below to add new class.</string>
+    <string name="click_button_below_to_add_new_student">Click button below to add new student.</string>
+    <string name="click_button_below_to_add_new_faculty">Click button below to add new faculty.</string>
+    <string name="click_button_below_to_add_new_subject">Click button below to add new subject.</string>
+    <string name="click_button_below_to_add_new_schedule">Click button below to add new lecture.</string>
+
+    <string name="class_list_is_empty">Class list is empty!</string>
+    <string name="branch_list_is_empty">Branch list is empty!</string>
+    <string name="student_list_is_empty">Student list is empty!</string>
+    <string name="faculty_list_is_empty">Faculty list is empty!</string>
+    <string name="subject_list_is_empty">Subject list is empty!</string>
+    <string name="lecture_list_is_empty">Lecture list is empty!</string>
+
 </resources>

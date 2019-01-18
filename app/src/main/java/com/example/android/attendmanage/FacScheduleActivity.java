@@ -3,12 +3,11 @@ package com.example.android.attendmanage;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
 
 import com.example.android.attendmanage.adapter.FacSchAdapter;
+import com.example.android.attendmanage.editActivities.FacSchEditActivity;
 import com.example.android.attendmanage.pojos.FacSchedule;
 import com.example.android.attendmanage.utilities.ExtraUtils;
 import com.example.android.attendmanage.utilities.GsonUtils;
@@ -17,7 +16,6 @@ import com.example.android.attendmanage.volley.VolleyTask;
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.ActionMode;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +29,9 @@ public class FacScheduleActivity extends AppCompatActivity {
 
     @BindView(R.id.fac_sch_rv)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.fac_sch_empty_view)
+    RelativeLayout emptyView;
 
     private FacSchAdapter mAdapter;
     ArrayList<FacSchedule> mFacSch;
@@ -84,7 +85,12 @@ public class FacScheduleActivity extends AppCompatActivity {
     private void refreshList() {
         VolleyTask.getFacSchedule(this, facUserId, day, jObj -> {
             mFacSch = GsonUtils.extractFacSchFromJson(jObj);
-            mAdapter.swapList(mFacSch);
+            if (mFacSch != null && mFacSch.size() > 0) {
+                mAdapter.swapList(mFacSch);
+                emptyView.setVisibility(View.GONE);
+            } else {
+                emptyView.setVisibility(View.VISIBLE);
+            }
         });
     }
 

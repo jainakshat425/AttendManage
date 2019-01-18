@@ -1,4 +1,4 @@
-package com.example.android.attendmanage;
+package com.example.android.attendmanage.editActivities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
@@ -6,14 +6,19 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import com.example.android.attendmanage.R;
+import com.example.android.attendmanage.SharedPrefManager;
 import com.example.android.attendmanage.adapter.SpinnerArrayAdapter;
 import com.example.android.attendmanage.pojos.Class;
 import com.example.android.attendmanage.utilities.ExtraUtils;
 import com.example.android.attendmanage.volley.VolleyTask;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
@@ -29,12 +34,15 @@ public class ClassEditActivity extends AppCompatActivity {
     private int collId;
     private int classId = -1;
 
+    @BindView(R.id.class_edit_layout)
+    LinearLayout layout;
+
     /**
      * semester
      */
     @BindView(R.id.class_sem_spin)
     Spinner semesterSpinner;
-    private String semester = null;
+    private String semester = "";
     private SpinnerArrayAdapter semesterAdapter;
 
 
@@ -43,7 +51,7 @@ public class ClassEditActivity extends AppCompatActivity {
      */
     @BindView(R.id.class_branch_spin)
     Spinner branchSpinner;
-    private String branch = null;
+    private String branch = "";
     private SpinnerArrayAdapter branchAdapter;
 
 
@@ -52,17 +60,20 @@ public class ClassEditActivity extends AppCompatActivity {
      */
     @BindView(R.id.class_section_input)
     TextInputLayout sectionIn;
+    String section = "";
 
 
     @OnClick(R.id.class_edit_done_fab)
     void saveClass() {
 
-        String section = Objects.requireNonNull(sectionIn.getEditText()).getText().toString().trim();
+        section = Objects.requireNonNull(sectionIn.getEditText()).getText().toString().trim();
 
-        Gson gson = new Gson();
-        String classJson = gson.toJson(new Class(Integer.parseInt(semester), section, branch));
+        if (validateInputs()) {
+            Gson gson = new Gson();
+            String classJson = gson.toJson(new Class(Integer.parseInt(semester), section, branch));
 
-        VolleyTask.saveClass(this, collId, classId, classJson);
+            VolleyTask.saveClass(this, collId, classId, classJson);
+        }
     }
 
     @Override
@@ -85,12 +96,20 @@ public class ClassEditActivity extends AppCompatActivity {
             branch = mClass.getBranchName();
         }
 
-        VolleyTask.setupBranchSpinner(this, collId, jObj -> {
+        setupBranchSpinner();
+        setupSemesterSpinner();
+
+        refreshBranchSpinner();
+    }
+
+    private void refreshBranchSpinner() {
+        VolleyTask.getBranchNames(this, collId, jObj -> {
             try {
                 JSONArray brJsonArr = jObj.getJSONArray("branch_names");
                 List<String> brList = new ArrayList<>();
                 brList.add("Branch");
-                for(int i=0; i<brJsonArr.length(); i++) {
+
+                for (int i = 0; i < brJsonArr.length(); i++) {
                     brList.add(brJsonArr.getString(i));
                 }
                 String[] brArr = brList.toArray(new String[0]);
@@ -99,7 +118,7 @@ public class ClassEditActivity extends AppCompatActivity {
                         brArr);
                 branchSpinner.setAdapter(branchAdapter);
 
-                if (branch != null) {
+                if (!TextUtils.isEmpty(branch)) {
                     for (int i = 0; i < brArr.length; i++) {
                         if (brArr[i].equals(branch)) {
                             branchSpinner.setSelection(i);
@@ -112,7 +131,16 @@ public class ClassEditActivity extends AppCompatActivity {
             }
         });
 
-        setupSemesterSpinner();
+    }
+
+    private void setupBranchSpinner() {
+        List<String> brList = new ArrayList<>();
+        brList.add("Branch");
+        String[] brArr = brList.toArray(new String[0]);
+        branchAdapter = new SpinnerArrayAdapter(ClassEditActivity.this,
+                android.R.layout.simple_spinner_dropdown_item,
+                brArr);
+        branchSpinner.setAdapter(branchAdapter);
 
         branchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -127,6 +155,15 @@ public class ClassEditActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void setupSemesterSpinner() {
+        String[] semArr = getResources().getStringArray(R.array.semester_array);
+        semesterAdapter = new SpinnerArrayAdapter(ClassEditActivity.this,
+                android.R.layout.simple_spinner_dropdown_item,
+                semArr);
+        semesterSpinner.setAdapter(semesterAdapter);
+
 
         semesterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -141,16 +178,8 @@ public class ClassEditActivity extends AppCompatActivity {
 
             }
         });
-        }
 
-    private void setupSemesterSpinner() {
-        String[] semArr = getResources().getStringArray(R.array.semester_array);
-        semesterAdapter = new SpinnerArrayAdapter(ClassEditActivity.this,
-                android.R.layout.simple_spinner_dropdown_item,
-                semArr);
-        semesterSpinner.setAdapter(semesterAdapter);
-
-        if (semester != null) {
+        if (!TextUtils.isEmpty(semester)) {
             for (int i = 0; i < semArr.length; i++) {
                 if (semArr[i].equals(semester)) {
                     semesterSpinner.setSelection(i);
@@ -159,4 +188,21 @@ public class ClassEditActivity extends AppCompatActivity {
             }
         }
     }
+
+    private boolean validateInputs() {
+        if (TextUtils.isEmpty(semester)) {
+            Snackbar.make(layout, "Semester not selected!", Snackbar.LENGTH_SHORT).show();
+            return false;
+        } else if (TextUtils.isEmpty(branch)) {
+            Snackbar.make(layout, "Branch not selected!", Snackbar.LENGTH_SHORT).show();
+            return false;
+        } else if (TextUtils.isEmpty(section)) {
+            sectionIn.setError("Enter valid section.");
+            return false;
+        } else {
+            sectionIn.setError(null);
+            return true;
+        }
+    }
+
 }

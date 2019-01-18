@@ -5,11 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/fac_edit_layout"
     android:padding="4dp"
-    tools:context=".FacultyEditActivity">
+    tools:context=".editActivities.FacultyEditActivity">
 
     <LinearLayout
-        style="@style/SpinnerLayoutContainer">
+        style="@style/SpinnerLayoutContainer"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp">
 
         <TextView
             style="@style/SpinnerTextStyle"

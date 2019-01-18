@@ -7,6 +7,7 @@ import butterknife.OnClick;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
@@ -45,6 +46,7 @@ public class ClassSelectActivity extends AppCompatActivity {
     @BindView(R.id.class_select_section_spin)
     Spinner sectionSpinner;
     private String section = null;
+    private SpinnerArrayAdapter sectionAdapter;
 
     @OnClick(R.id.fab_show_students)
     void showStudents() {
@@ -68,28 +70,21 @@ public class ClassSelectActivity extends AppCompatActivity {
 
         collegeId = SharedPrefManager.getInstance(this).getCollId();
 
-        VolleyTask.setupBranchSpinner(this, collegeId, jObj -> {
-            try {
-                JSONArray brJsonArr = jObj.getJSONArray("branch_names");
-                List<String> brList = new ArrayList<>();
-                brList.add("Branch");
-                for (int i = 0; i < brJsonArr.length(); i++) {
-                    brList.add(brJsonArr.getString(i));
-                }
-                String[] brArr = brList.toArray(new String[0]);
-                branchAdapter = new SpinnerArrayAdapter(ClassSelectActivity.this,
-                        android.R.layout.simple_spinner_dropdown_item,
-                        brArr);
-                branchSpinner.setAdapter(branchAdapter);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        });
-
+        setupBranchSpinner();
         setupSemesterSpinner();
+        setupSectionSpinner();
 
-        ExtraUtils.emptySectionSpinner(this, sectionSpinner);
+        refreshBranchSpinner();
+    }
+
+    private void setupBranchSpinner() {
+        List<String> brList = new ArrayList<>();
+        brList.add("Branch");
+        String[] brArr = brList.toArray(new String[0]);
+        branchAdapter = new SpinnerArrayAdapter(ClassSelectActivity.this,
+                android.R.layout.simple_spinner_dropdown_item,
+                brArr);
+        branchSpinner.setAdapter(branchAdapter);
 
         branchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -105,19 +100,36 @@ public class ClassSelectActivity extends AppCompatActivity {
 
             }
         });
+    }
 
-        sectionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
-                if (pos != 0)
-                    section = (String) parent.getItemAtPosition(pos);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+    private void refreshBranchSpinner() {
+        List<String> brList = new ArrayList<>();
+        brList.add("Branch");
+        VolleyTask.getBranchNames(this, collegeId, jObj -> {
+            try {
+                JSONArray brJsonArr = jObj.getJSONArray("branch_names");
 
+                for (int i = 0; i < brJsonArr.length(); i++) {
+                    brList.add(brJsonArr.getString(i));
+                }
+                String[] brArr = brList.toArray(new String[0]);
+                branchAdapter = new SpinnerArrayAdapter(ClassSelectActivity.this,
+                        android.R.layout.simple_spinner_dropdown_item,
+                        brArr);
+                branchSpinner.setAdapter(branchAdapter);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         });
+    }
 
+    private void setupSemesterSpinner() {
+        String[] semArr = getResources().getStringArray(R.array.semester_array);
+        SpinnerArrayAdapter semesterAdapter = new SpinnerArrayAdapter(ClassSelectActivity.this,
+                android.R.layout.simple_spinner_dropdown_item,
+                semArr);
+        semesterSpinner.setAdapter(semesterAdapter);
         semesterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
@@ -134,8 +146,28 @@ public class ClassSelectActivity extends AppCompatActivity {
         });
     }
 
+    private void setupSectionSpinner() {
+        String[] secArr = {"Section"};
+        sectionAdapter = new SpinnerArrayAdapter(this,
+                android.R.layout.simple_spinner_dropdown_item, secArr);
+        sectionSpinner.setAdapter(sectionAdapter);
+
+        sectionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
+                if (pos != 0)
+                    section = (String) parent.getItemAtPosition(pos);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
     private void refreshSectionsSpinner() {
-        if (semester != null && branch != null) {
+        if (!TextUtils.isEmpty(semester) && !TextUtils.isEmpty(branch)) {
             final List<String> secArr = new ArrayList<>();
             secArr.add("Section");
             VolleyTask.getSections(ClassSelectActivity.this, branch,
@@ -159,14 +191,8 @@ public class ClassSelectActivity extends AppCompatActivity {
 
                     });
         } else
-            ExtraUtils.emptySectionSpinner(this, sectionSpinner);
+            setupSectionSpinner();
     }
 
-    private void setupSemesterSpinner() {
-        String[] semArr = getResources().getStringArray(R.array.semester_array);
-        SpinnerArrayAdapter semesterAdapter = new SpinnerArrayAdapter(ClassSelectActivity.this,
-                android.R.layout.simple_spinner_dropdown_item,
-                semArr);
-        semesterSpinner.setAdapter(semesterAdapter);
-    }
+
 }

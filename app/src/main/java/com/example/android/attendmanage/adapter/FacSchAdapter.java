@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.attendmanage.FacSchEditActivity;
+import com.example.android.attendmanage.editActivities.FacSchEditActivity;
 import com.example.android.attendmanage.R;
 import com.example.android.attendmanage.pojos.FacSchedule;
 import com.example.android.attendmanage.utilities.ExtraUtils;
@@ -110,10 +110,19 @@ public class FacSchAdapter extends RecyclerView.Adapter<FacSchAdapter.FacSchHold
         String lectEndTime = String.valueOf(sch.getLectEndTime());
 
         try {
-            Date lectStartTimeDisplay = ExtraUtils.timeFormat.parse(lectStartTime);
-            lectStartTime = ExtraUtils.timeDisplayFormat.format(lectStartTimeDisplay);
-            Date lectEndTimeDisplay = ExtraUtils.timeFormat.parse(lectEndTime);
-            lectEndTime = ExtraUtils.timeDisplayFormat.format(lectEndTimeDisplay);
+            if (!lectStartTime.equals("00:00:00")) {
+                Date lectStartTimeDisplay = ExtraUtils.timeFormat.parse(lectStartTime);
+                lectStartTime = ExtraUtils.timeDisplayFormat.format(lectStartTimeDisplay);
+            } else {
+                lectStartTime = "--:-- --";
+            }
+
+            if (!lectEndTime.equals("00:00:00")) {
+                Date lectEndTimeDisplay = ExtraUtils.timeFormat.parse(lectEndTime);
+                lectEndTime = ExtraUtils.timeDisplayFormat.format(lectEndTimeDisplay);
+            } else {
+                lectEndTime = "--:-- --";
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }

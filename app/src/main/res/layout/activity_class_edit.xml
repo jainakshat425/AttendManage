@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/class_edit_layout"
     android:padding="4dp"
-    tools:context=".ClassEditActivity">
+    tools:context=".editActivities.ClassEditActivity">
 
-    <LinearLayout style="@style/SpinnerLayoutContainer">
+    <LinearLayout style="@style/SpinnerLayoutContainer"
+        android:layout_marginTop="16dp">
 
         <TextView
             style="@style/SpinnerTextStyle"

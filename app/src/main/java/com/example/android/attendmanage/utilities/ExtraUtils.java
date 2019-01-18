@@ -68,6 +68,7 @@ public class ExtraUtils {
     private static final String DB_URL = "http://192.168.43.156/attendmanagephp/v1/";
 
     public static final String ADMIN_LOGIN_URL = DB_URL + "adminLogin.php";
+    public static final String REGISTER_URL = DB_URL + "registerCollege.php";
     public static final String GET_BRANCH_NAMES_URL = DB_URL + "getBranchNames.php";
     public static final String GET_SECS_URL = DB_URL + "getSections.php";
     public static final String GET_FAC_USER_IDS = DB_URL + "getFacUserIds.php";
@@ -148,26 +149,5 @@ public class ExtraUtils {
         String time = timeFormat.format(Calendar.getInstance().getTime());
         return time;
     }
-
-    /**
-     * empties the subject spinner
-     */
-    public static void emptySubjectSpinner(Context context, Spinner subSpinner) {
-        String[] subject = {"Subject"};
-        SpinnerArrayAdapter subjectAdapter = new SpinnerArrayAdapter(context,
-                android.R.layout.simple_spinner_dropdown_item, subject);
-        subSpinner.setAdapter(subjectAdapter);
-    }
-
-    /**
-     * empties the section spinner
-     */
-    public static void emptySectionSpinner(Context context, Spinner secSpinner) {
-        String[] section = {"Section"};
-        SpinnerArrayAdapter sectionAdapter = new SpinnerArrayAdapter(context,
-                android.R.layout.simple_spinner_dropdown_item, section);
-        secSpinner.setAdapter(sectionAdapter);
-    }
-
 }
 

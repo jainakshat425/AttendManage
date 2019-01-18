@@ -1,4 +1,4 @@
-package com.example.android.attendmanage;
+package com.example.android.attendmanage.editActivities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
@@ -6,11 +6,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
+import com.example.android.attendmanage.R;
+import com.example.android.attendmanage.SharedPrefManager;
 import com.example.android.attendmanage.adapter.SpinnerArrayAdapter;
 import com.example.android.attendmanage.pojos.Branch;
 import com.example.android.attendmanage.utilities.ExtraUtils;
@@ -30,28 +32,33 @@ public class BranchEditActivity extends AppCompatActivity {
     private int collId;
     private int branchId = -1;
 
+    @BindView(R.id.branch_hod_spin)
+    Spinner hodSpinner;
     private SpinnerArrayAdapter hodAdapter;
     private String hodSelected = null;
 
-    @BindView(R.id.branch_hod_spin)
-    Spinner hodSpinner;
-
     @BindView(R.id.branch_name_input)
     TextInputLayout bNameIn;
+    String bName = "";
+
 
     @BindView(R.id.branch_full_name_input)
     TextInputLayout bFullNameIn;
+    String bFullName = "";
 
     @OnClick(R.id.branch_edit_done_fab)
     void saveBranch() {
 
-        String bName = Objects.requireNonNull(bNameIn.getEditText()).getText().toString().trim();
-        String bFullName = Objects.requireNonNull(bFullNameIn.getEditText()).getText().toString().trim();
+        bName = Objects.requireNonNull(bNameIn.getEditText()).getText().toString().trim();
+        bFullName = Objects.requireNonNull(bFullNameIn.getEditText()).getText().toString().trim();
 
-        Gson gson = new Gson();
-        String branchJson = gson.toJson(new Branch(bName, bFullName, hodSelected));
+        if (validateInputs()) {
 
-        VolleyTask.saveBranch(this, collId, branchId, branchJson);
+            Gson gson = new Gson();
+            String branchJson = gson.toJson(new Branch(bName, bFullName, hodSelected));
+
+            VolleyTask.saveBranch(this, collId, branchId, branchJson);
+        }
     }
 
     @Override
@@ -74,32 +81,18 @@ public class BranchEditActivity extends AppCompatActivity {
             hodSelected = branch.getHodId();
         }
 
-        VolleyTask.getFacUserIds(this, collId, jObj -> {
-            try {
-                JSONArray facJsonArr = jObj.getJSONArray("fac_user_ids");
-                List<String> facList = new ArrayList<>();
-                facList.add("Head Of Dept.");
-                for (int i = 0; i < facJsonArr.length(); i++) {
-                    facList.add(facJsonArr.getString(i));
-                }
-                String[] facArr = facList.toArray(new String[0]);
-                hodAdapter = new SpinnerArrayAdapter(BranchEditActivity.this,
-                        android.R.layout.simple_spinner_dropdown_item,
-                        facArr);
-                hodSpinner.setAdapter(hodAdapter);
+        setupHodSpinner();
+        refreshHodSpinner();
+    }
 
-                if (hodSelected != null) {
-                    for (int i = 0; i < facArr.length; i++) {
-                        if (facArr[i].equals(hodSelected)) {
-                            hodSpinner.setSelection(i);
-                            break;
-                        }
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        });
+    private void setupHodSpinner() {
+        List<String> facList = new ArrayList<>();
+        facList.add("Head of Department");
+        String[] facArr = facList.toArray(new String[0]);
+        hodAdapter = new SpinnerArrayAdapter(BranchEditActivity.this,
+                android.R.layout.simple_spinner_dropdown_item,
+                facArr);
+        hodSpinner.setAdapter(hodAdapter);
 
         hodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -114,4 +107,58 @@ public class BranchEditActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void refreshHodSpinner() {
+        VolleyTask.getFacUserIds(this, collId, jObj -> {
+            try {
+                List<String> facList = new ArrayList<>();
+                facList.add("Head of Department");
+
+                JSONArray facJsonArr = jObj.getJSONArray("fac_user_ids");
+
+                for (int i = 0; i < facJsonArr.length(); i++) {
+                    facList.add(facJsonArr.getString(i));
+                }
+                String[] facArr = facList.toArray(new String[0]);
+                hodAdapter = new SpinnerArrayAdapter(BranchEditActivity.this,
+                        android.R.layout.simple_spinner_dropdown_item,
+                        facArr);
+                hodSpinner.setAdapter(hodAdapter);
+
+                if (!TextUtils.isEmpty(hodSelected)) {
+                    for (int i = 0; i < facArr.length; i++) {
+                        if (facArr[i].equals(hodSelected)) {
+                            hodSpinner.setSelection(i);
+                            break;
+                        }
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private boolean validateInputs() {
+        return isValidBranch();
+    }
+
+    private boolean isValidBranch() {
+        if (TextUtils.isEmpty(bName)) {
+            bNameIn.setError("Enter valid branch name.");
+            return false;
+        } else if (bName.length() > 8) {
+            bNameIn.setError("Branch can contain atmost 8 characters.");
+            return false;
+        } else if (TextUtils.isEmpty(bFullName)) {
+            bNameIn.setError(null);
+            bFullNameIn.setError("Enter valid branch name.");
+            return false;
+        } else {
+            bNameIn.setError(null);
+            bFullNameIn.setError(null);
+            return true;
+        }
+    }
 }
+

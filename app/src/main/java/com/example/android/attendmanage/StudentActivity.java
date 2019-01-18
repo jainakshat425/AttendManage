@@ -2,11 +2,12 @@ package com.example.android.attendmanage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.example.android.attendmanage.adapter.StudentAdapter;
-import com.example.android.attendmanage.adapter.SubjectAdapter;
+import com.example.android.attendmanage.editActivities.StudentEditActivity;
 import com.example.android.attendmanage.pojos.Student;
-import com.example.android.attendmanage.pojos.Subject;
 import com.example.android.attendmanage.utilities.ExtraUtils;
 import com.example.android.attendmanage.utilities.GsonUtils;
 import com.example.android.attendmanage.volley.VolleyTask;
@@ -25,6 +26,9 @@ public class StudentActivity extends AppCompatActivity {
 
     @BindView(R.id.student_rv)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.student_empty_view)
+    RelativeLayout emptyView;
 
     private StudentAdapter mAdapter;
     int collegeId;
@@ -63,20 +67,29 @@ public class StudentActivity extends AppCompatActivity {
             mRecyclerView.addItemDecoration(divider);
             mRecyclerView.setAdapter(mAdapter);
 
-            VolleyTask.getStudents(this, collegeId, semester, branch, section, jObj -> {
-                ArrayList<Student> students = GsonUtils.extractStudentsFromJson(jObj);
-                mAdapter.swapList(students);
-            });
+            refreshList();
         }
+
+    }
+
+    private void refreshList() {
+        VolleyTask.getStudents(this, collegeId, semester, branch, section, jObj -> {
+            ArrayList<Student> students = GsonUtils.extractStudentsFromJson(jObj);
+            if (students != null && students.size() > 0) {
+                mAdapter.swapList(students);
+                emptyView.setVisibility(View.GONE);
+            } else {
+                emptyView.setVisibility(View.VISIBLE);
+            }
+
+        });
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (bundle != null)
-            VolleyTask.getStudents(this, collegeId, semester, branch, section, jObj -> {
-                ArrayList<Student> students = GsonUtils.extractStudentsFromJson(jObj);
-                mAdapter.swapList(students);
-            });
+            refreshList();
     }
 }

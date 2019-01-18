@@ -10,10 +10,11 @@ import butterknife.OnClick;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
 
-import com.example.android.attendmanage.adapter.BranchAdapter;
 import com.example.android.attendmanage.adapter.ClassAdapter;
-import com.example.android.attendmanage.pojos.Branch;
+import com.example.android.attendmanage.editActivities.ClassEditActivity;
 import com.example.android.attendmanage.pojos.Class;
 import com.example.android.attendmanage.utilities.ExtraUtils;
 import com.example.android.attendmanage.utilities.GsonUtils;
@@ -25,6 +26,9 @@ public class ClassActivity extends AppCompatActivity {
 
     @BindView(R.id.class_rv)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.class_empty_view)
+    RelativeLayout emptyView;
 
     private ClassAdapter mAdapter;
     int collegeId;
@@ -53,18 +57,25 @@ public class ClassActivity extends AppCompatActivity {
         mRecyclerView.addItemDecoration(divider);
         mRecyclerView.setAdapter(mAdapter);
 
+       refreshList();
+    }
+
+    private void refreshList() {
         VolleyTask.getClasses(this, collegeId, jObj -> {
             ArrayList<Class> classes = GsonUtils.extractClassesFromJson(jObj);
-            mAdapter.swapList(classes);
+            if (classes != null && classes.size() > 0) {
+                mAdapter.swapList(classes);
+                emptyView.setVisibility(View.GONE);
+            } else {
+                emptyView.setVisibility(View.VISIBLE);
+            }
+
         });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        VolleyTask.getClasses(this, collegeId, jObj -> {
-            ArrayList<Class> classes = GsonUtils.extractClassesFromJson(jObj);
-            mAdapter.swapList(classes);
-        });
+      refreshList();
     }
 }

@@ -2,10 +2,11 @@ package com.example.android.attendmanage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
 
-import com.example.android.attendmanage.adapter.BranchAdapter;
 import com.example.android.attendmanage.adapter.SubjectAdapter;
-import com.example.android.attendmanage.pojos.Branch;
+import com.example.android.attendmanage.editActivities.SubjectEditActivity;
 import com.example.android.attendmanage.pojos.Subject;
 import com.example.android.attendmanage.utilities.ExtraUtils;
 import com.example.android.attendmanage.utilities.GsonUtils;
@@ -25,6 +26,9 @@ public class SubjectActivity extends AppCompatActivity {
 
     @BindView(R.id.sub_rv)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.subject_empty_view)
+    RelativeLayout emptyView;
 
     private SubjectAdapter mAdapter;
     int collegeId;
@@ -53,18 +57,24 @@ public class SubjectActivity extends AppCompatActivity {
         mRecyclerView.addItemDecoration(divider);
         mRecyclerView.setAdapter(mAdapter);
 
+        refreshList();
+    }
+
+    private void refreshList() {
         VolleyTask.getSubjects(this, collegeId, jObj -> {
             ArrayList<Subject> subjects = GsonUtils.extractSubjectsFromJson(jObj);
-            mAdapter.swapList(subjects);
+            if (subjects != null && subjects.size() > 0) {
+                mAdapter.swapList(subjects);
+                emptyView.setVisibility(View.GONE);
+            } else {
+                emptyView.setVisibility(View.VISIBLE);
+            }
         });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        VolleyTask.getSubjects(this, collegeId, jObj -> {
-            ArrayList<Subject> subjects = GsonUtils.extractSubjectsFromJson(jObj);
-            mAdapter.swapList(subjects);
-        });
+        refreshList();
     }
 }

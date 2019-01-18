@@ -3,69 +3,107 @@ package com.example.android.attendmanage;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.widget.Toast;
 
-import com.example.android.attendmanage.volley.VolleyCallback;
 import com.example.android.attendmanage.volley.VolleyTask;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
-import org.json.JSONObject;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText usernameEditText;
-    private EditText passwordEditText;
-    private Button loginButton;
-    private Button needHelpButton;
+    @BindView(R.id.username_edit_text)
+    TextInputLayout usernameIn;
+    String username="";
+
+    @BindView(R.id.password_edit_text)
+    TextInputLayout passIn;
+    String pass="";
+
+    @OnClick(R.id.login_button)
+    void login() {
+       username = Objects.requireNonNull(usernameIn.getEditText()).getText().toString().trim();
+       pass = Objects.requireNonNull(passIn.getEditText()).getText().toString().trim();
+
+        if (validateInputs()) {
+            VolleyTask.login(this, username, pass, jObj -> {
+                try {
+                    Toast.makeText(LoginActivity.this, jObj.getString("message"),
+                            Toast.LENGTH_SHORT).show();
+                    int collId = jObj.getInt(SharedPrefManager.COLL_ID);
+                    String collName = jObj.getString(SharedPrefManager.COLL_NAME);
+                    String collFullName = jObj.getString(SharedPrefManager.COLL_FULL_NAME);
+                    String adminId = jObj.getString(SharedPrefManager.ADMIN_ID);
+
+                    boolean saved = SharedPrefManager.getInstance(LoginActivity.this)
+                            .saveAdminDetails(collId, collName, collFullName, adminId);
+                    if (saved) {
+                        finish();
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+    }
+
+    @OnClick(R.id.need_help_button)
+    void needHelp() {
+        Intent needHelpIntent = new Intent(Intent.ACTION_SEND);
+        needHelpIntent.setType("text/html");
+        needHelpIntent.putExtra(Intent.EXTRA_SUBJECT, "Need Help");
+        needHelpIntent.putExtra(Intent.EXTRA_TEXT, "Describe the problem");
+        startActivity(Intent.createChooser(needHelpIntent, "Send Email..."));
+    }
+
+    @OnClick(R.id.register_button)
+    void startRegisterActivity() {
+        startActivity(new Intent(this, RegisterActivity.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        usernameEditText = findViewById(R.id.username_edit_text);
-        passwordEditText = findViewById(R.id.password_edit_text);
-        loginButton = findViewById(R.id.login_button);
-        needHelpButton = findViewById(R.id.need_help_button);
-
-        loginButton.setOnClickListener(v -> login());
-
-        needHelpButton.setOnClickListener(v -> {
-            Intent needHelpIntent = new Intent(Intent.ACTION_SEND);
-            needHelpIntent.setType("text/html");
-            needHelpIntent.putExtra(Intent.EXTRA_SUBJECT, "Need Help");
-            needHelpIntent.putExtra(Intent.EXTRA_TEXT, "Describe the problem");
-            startActivity(Intent.createChooser(needHelpIntent, "Send Email..."));
-        });
+        ButterKnife.bind(this);
     }
 
-    private void login() {
-        final String username = usernameEditText.getText().toString().trim();
-        final String password = passwordEditText.getText().toString().trim();
-
-        VolleyTask.login(this, username, password, jObj -> {
-            try {
-                Toast.makeText(LoginActivity.this, jObj.getString("message"),
-                        Toast.LENGTH_SHORT).show();
-                int collId = jObj.getInt(SharedPrefManager.COLL_ID);
-                String collName = jObj.getString(SharedPrefManager.COLL_NAME);
-                String collFullName = jObj.getString(SharedPrefManager.COLL_FULL_NAME);
-                String adminId = jObj.getString(SharedPrefManager.ADMIN_ID);
-
-                boolean saved = SharedPrefManager.getInstance(LoginActivity.this)
-                        .saveAdminDetails(collId, collName, collFullName, adminId);
-                if (saved) {
-                    finish();
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        });
+    private boolean validateInputs() {
+        if (!isValidEmail())
+            return false;
+        else return isValidPass();
     }
+
+    private boolean isValidPass() {
+        if (TextUtils.isEmpty(pass) || pass.length() < 8) {
+            passIn.setError("Password must contain minimum 8 characters.");
+            return false;
+        } else {
+            passIn.setError(null);
+            return true;
+        }
+    }
+
+    private boolean isValidEmail() {
+        if (TextUtils.isEmpty(username) || !Patterns.EMAIL_ADDRESS.matcher(username).matches()) {
+            usernameIn.setError("Enter valid Email Address.");
+            return false;
+        } else {
+            usernameIn.setError(null);
+            return true;
+        }
+    }
+
 }
 
 

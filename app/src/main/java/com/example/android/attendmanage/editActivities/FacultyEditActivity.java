@@ -1,15 +1,20 @@
-package com.example.android.attendmanage;
+package com.example.android.attendmanage.editActivities;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import com.example.android.attendmanage.R;
+import com.example.android.attendmanage.SharedPrefManager;
 import com.example.android.attendmanage.adapter.SpinnerArrayAdapter;
 import com.example.android.attendmanage.pojos.Faculty;
-import com.example.android.attendmanage.pojos.Student;
 import com.example.android.attendmanage.utilities.ExtraUtils;
 import com.example.android.attendmanage.volley.VolleyTask;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
@@ -30,34 +35,42 @@ public class FacultyEditActivity extends AppCompatActivity {
     private int collId;
     private int facId = -1;
 
+    @BindView(R.id.fac_edit_layout)
+    LinearLayout layout;
+
     /**
      * Department
      */
     @BindView(R.id.fac_dept_spin)
     Spinner deptSpinner;
-    private String dept = null;
+    private String dept = "";
     private SpinnerArrayAdapter deptAdapter;
 
     @BindView(R.id.fac_name_input)
     TextInputLayout nameIn;
+    private String name = "";
 
     @BindView(R.id.fac_user_id_input)
     TextInputLayout emailIn;
+    private String email = "";
 
     @BindView(R.id.fac_mob_no_input)
     TextInputLayout mobNoIn;
+    private String mobNo = "";
 
     @OnClick(R.id.fac_edit_done_fab)
     void saveFaculty() {
 
-        String email = Objects.requireNonNull(emailIn.getEditText()).getText().toString().trim();
-        String name = Objects.requireNonNull(nameIn.getEditText()).getText().toString().trim();
-        String mobNo = Objects.requireNonNull(mobNoIn.getEditText()).getText().toString().trim();
+        email = Objects.requireNonNull(emailIn.getEditText()).getText().toString().trim();
+        name = Objects.requireNonNull(nameIn.getEditText()).getText().toString().trim();
+        mobNo = Objects.requireNonNull(mobNoIn.getEditText()).getText().toString().trim();
 
-        Gson gson = new Gson();
-        String facJson = gson.toJson(new Faculty(facId, email, name, mobNo, dept));
+        if (validateInputs()) {
+            Gson gson = new Gson();
+            String facJson = gson.toJson(new Faculty(facId, email, name, mobNo, dept));
 
-        VolleyTask.saveFaculty(this, collId, facJson);
+            VolleyTask.saveFaculty(this, collId, facJson);
+        }
     }
 
     @Override
@@ -82,11 +95,17 @@ public class FacultyEditActivity extends AppCompatActivity {
             dept = faculty.getDeptName();
         }
 
-        VolleyTask.setupBranchSpinner(this, collId, jObj -> {
+        setupDeptSpinner();
+        refreshDeptSpinner();
+    }
+
+    private void refreshDeptSpinner() {
+        List<String> brList = new ArrayList<>();
+        brList.add("Select");
+        VolleyTask.getBranchNames(this, collId, jObj -> {
             try {
                 JSONArray brJsonArr = jObj.getJSONArray("branch_names");
-                List<String> brList = new ArrayList<>();
-                brList.add("Department");
+
                 for (int i = 0; i < brJsonArr.length(); i++) {
                     brList.add(brJsonArr.getString(i));
                 }
@@ -108,6 +127,16 @@ public class FacultyEditActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         });
+    }
+
+    private void setupDeptSpinner() {
+        List<String> brList = new ArrayList<>();
+        brList.add("Select");
+        String[] brArr = brList.toArray(new String[0]);
+        deptAdapter = new SpinnerArrayAdapter(FacultyEditActivity.this,
+                android.R.layout.simple_spinner_dropdown_item,
+                brArr);
+        deptSpinner.setAdapter(deptAdapter);
 
         deptSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -120,4 +149,35 @@ public class FacultyEditActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) { }
         });
     }
+
+    private boolean validateInputs() {
+        if (!isValidEmail()) {
+            return false;
+        } else if (TextUtils.isEmpty(dept)) {
+            Snackbar.make(layout, "Department not selected!", Snackbar.LENGTH_SHORT).show();
+            return false;
+        } else if (TextUtils.isEmpty(name) || name.length() < 3) {
+            nameIn.setError("Enter valid name.");
+            return false;
+        } else if (TextUtils.isEmpty(mobNo) || mobNo.length() != 10) {
+            nameIn.setError(null);
+            mobNoIn.setError("Enter valid 10-digit mobile number.");
+            return false;
+        } else {
+            nameIn.setError(null);
+            mobNoIn.setError(null);
+        }
+        return true;
+    }
+
+    private boolean isValidEmail() {
+        if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailIn.setError("Enter valid Email Address.");
+            return false;
+        } else {
+            emailIn.setError(null);
+            return true;
+        }
+    }
+
 }
