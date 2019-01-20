@@ -5,6 +5,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.example.android.attendmanage.editActivities.BranchEditActivity;
@@ -738,9 +739,13 @@ public class VolleyTask {
 
     public static void getFaculties(final Context mContext, final int collId,
                                     VolleyCallback callback) {
+        ProgressDialog pDialog = new ProgressDialog(mContext);
+        pDialog.setMessage("Loading...");
+        pDialog.show();
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.GET_FACULTIES_URL,
                 response -> {
+            pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
 
@@ -755,6 +760,7 @@ public class VolleyTask {
                         e.printStackTrace();
                     }
                 }, error -> {
+            pDialog.dismiss();
             Toast.makeText(mContext, error.getMessage(),
                     Toast.LENGTH_LONG).show();
         }) {
@@ -836,6 +842,8 @@ public class VolleyTask {
                 return params;
             }
         };
+        request.setRetryPolicy(new DefaultRetryPolicy(30000,
+                    0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestHandler.getInstance(context).addToRequestQueue(request);
     }
 
@@ -877,6 +885,8 @@ public class VolleyTask {
                 return params;
             }
         };
+        request.setRetryPolicy(new DefaultRetryPolicy(30000,
+                0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestHandler.getInstance(context).addToRequestQueue(request);
     }
 }
