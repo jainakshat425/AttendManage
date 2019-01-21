@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/main_container"
+    android:paddingEnd="8dp">
+
+    <RelativeLayout
+        android:id="@+id/edit_profile"
+        style="@style/main_card_container">
+
+        <ImageView
+            android:id="@+id/iv_edit_profile"
+            style="@style/main_image_view"
+            app:srcCompat="@drawable/ic_edit" />
+
+        <TextView
+            style="@style/main_textview"
+            android:layout_below="@id/iv_edit_profile"
+            android:text="Edit Profile" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/change_password"
+        style="@style/main_card_container">
+
+        <ImageView
+            android:id="@+id/iv_keys"
+            style="@style/main_image_view"
+            app:srcCompat="@drawable/ic_pass_key" />
+
+        <TextView
+            style="@style/main_textview"
+            android:layout_below="@id/iv_keys"
+            android:text="Change Password" />
+
+    </RelativeLayout>
+</LinearLayout>

@@ -36,15 +36,13 @@ public class LoginActivity extends AppCompatActivity {
         if (validateInputs()) {
             VolleyTask.login(this, username, pass, jObj -> {
                 try {
-                    Toast.makeText(LoginActivity.this, jObj.getString("message"),
-                            Toast.LENGTH_SHORT).show();
                     int collId = jObj.getInt(SharedPrefManager.COLL_ID);
                     String collName = jObj.getString(SharedPrefManager.COLL_NAME);
                     String collFullName = jObj.getString(SharedPrefManager.COLL_FULL_NAME);
-                    String adminId = jObj.getString(SharedPrefManager.ADMIN_ID);
+                    String collEmail = jObj.getString(SharedPrefManager.COLL_EMAIL);
 
                     boolean saved = SharedPrefManager.getInstance(LoginActivity.this)
-                            .saveAdminDetails(collId, collName, collFullName, adminId);
+                            .saveCollegeDetails(collId, collName, collFullName, collEmail);
                     if (saved) {
                         finish();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));

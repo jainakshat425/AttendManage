@@ -36,17 +36,16 @@ public class VolleyTask {
         pDialog.setMessage("Logging in...");
         pDialog.show();
         StringRequest request = new StringRequest(Request.Method.POST,
-                ExtraUtils.ADMIN_LOGIN_URL,
+                ExtraUtils.COLLEGE_LOGIN_URL,
                 response -> {
                     pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
-
+                        Toast.makeText(context, jObj.getString("message"),
+                                Toast.LENGTH_SHORT).show();
                         if (!jObj.getBoolean("error")) {
                             volleyCallback.onSuccessResponse(jObj);
                         }
-                        Toast.makeText(context, jObj.getString("message"),
-                                Toast.LENGTH_SHORT).show();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -58,8 +57,8 @@ public class VolleyTask {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
 
-                params.put(SharedPrefManager.ADMIN_ID, username);
-                params.put(SharedPrefManager.ADMIN_PASS, password);
+                params.put(SharedPrefManager.COLL_EMAIL, username);
+                params.put(SharedPrefManager.COLL_PASS, password);
 
                 return params;
             }
@@ -315,7 +314,6 @@ public class VolleyTask {
         };
         RequestHandler.getInstance(context).addToRequestQueue(request);
     }
-
 
     public static void getSubjects(final Context mContext, final int collId,
                                    VolleyCallback callback) {
@@ -887,6 +885,85 @@ public class VolleyTask {
         };
         request.setRetryPolicy(new DefaultRetryPolicy(30000,
                 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestHandler.getInstance(context).addToRequestQueue(request);
+    }
+
+    public static void changeAdminPassword(Context context, int collId, String currentPass,
+                                           String newPass, VolleyCallback callback) {
+        ProgressDialog pDialog = new ProgressDialog(context);
+        pDialog.setMessage("Verifying & Updating...");
+        pDialog.show();
+        StringRequest request = new StringRequest(Request.Method.POST,
+                ExtraUtils.CHANGE_COLLEGE_PASS_URL,
+                response -> {
+                    pDialog.dismiss();
+                    try {
+                        JSONObject jObj = new JSONObject(response);
+                        Toast.makeText(context, jObj.getString("message"),
+                                Toast.LENGTH_SHORT).show();
+                        if (!jObj.getBoolean("error")) {
+                            callback.onSuccessResponse(jObj);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }, error -> {
+            pDialog.dismiss();
+            Toast.makeText(context, error.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("coll_id", String.valueOf(collId));
+                params.put("current_password", currentPass);
+                params.put("new_password", newPass);
+                return params;
+            }
+        };
+        RequestHandler.getInstance(context).addToRequestQueue(request);
+    }
+
+    public static void updateCollegeDetails(Context context, int collId, String password,
+                                            String collName, String collFullName,
+                                            String email, VolleyCallback callback) {
+        ProgressDialog pDialog = new ProgressDialog(context);
+        pDialog.setMessage("Updating...");
+        pDialog.show();
+        StringRequest request = new StringRequest(Request.Method.POST,
+                ExtraUtils.UPDATE_COLLEGE_DETAILS_URL,
+                response -> {
+                    pDialog.dismiss();
+                    try {
+                        JSONObject jObj = new JSONObject(response);
+                        Toast.makeText(context, jObj.getString("message"),
+                                Toast.LENGTH_SHORT).show();
+                        if (!jObj.getBoolean("error")) {
+                            callback.onSuccessResponse(jObj);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }, error -> {
+            pDialog.dismiss();
+            Toast.makeText(context, error.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("coll_id", String.valueOf(collId));
+                params.put("password", password);
+                params.put("coll_name", collName);
+                params.put("coll_full_name", collFullName);
+                params.put("coll_email", email);
+                return params;
+            }
+        };
         RequestHandler.getInstance(context).addToRequestQueue(request);
     }
 }

@@ -36,29 +36,29 @@
             android:id="@+id/fac_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="1dp"
             android:ellipsize="marquee"
             android:textColor="@android:color/black"
-            android:textSize="16sp"
-            tools:text="Teacher Name" />
-
-        <TextView
-            android:id="@+id/fac_mob_no"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="1dp"
-            android:fontFamily="sans-serif-smallcaps"
-            android:textColor="@android:color/black"
+            android:textStyle="bold"
             android:textSize="14sp"
-            tools:text="7734392939" />
+            tools:text="Teacher Name" />
 
         <TextView
             android:id="@+id/fac_user_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
             android:textSize="14sp"
             android:textStyle="bold|italic"
-            tools:text="Teacher@GTC" />
+            tools:text="jainakshat425@gmail.com" />
+
+
+        <TextView
+            android:id="@+id/fac_mob_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold|italic"
+            tools:text="Mob.No. 7734392939" />
     </LinearLayout>
 
 

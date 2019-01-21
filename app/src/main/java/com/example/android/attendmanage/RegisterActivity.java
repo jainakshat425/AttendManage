@@ -81,13 +81,18 @@ public class RegisterActivity extends AppCompatActivity {
             collNameIn.setError("Enter acronym of College name.");
             return false;
         } else if (TextUtils.isEmpty(collFullName) || collFullName.length() < 8) {
+            collNameIn.setError(null);
             collFullNameIn.setError("Enter valid College name.");
             return false;
         } else if (collFullName.length() > 100) {
+            collNameIn.setError(null);
             collFullNameIn.setError("College name too long.");
             return false;
+        } else {
+            collNameIn.setError(null);
+            collFullNameIn.setError(null);
+            return true;
         }
-        return true;
     }
 
     private boolean isValidPass() {

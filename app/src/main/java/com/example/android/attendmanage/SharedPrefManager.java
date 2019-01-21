@@ -11,8 +11,8 @@ public class SharedPrefManager {
     public static final String COLL_ID = "college_id";
     public static final String COLL_NAME = "coll_name";
     public static final String COLL_FULL_NAME = "coll_full_name";
-    public static final String ADMIN_ID = "coll_admin_id";
-    public static final String ADMIN_PASS = "coll_admin_pass";
+    public static final String COLL_EMAIL = "coll_email";
+    public static final String COLL_PASS = "coll_password";
 
     private SharedPrefManager(Context context) {
         mCtx = context;
@@ -30,14 +30,14 @@ public class SharedPrefManager {
         SharedPreferences sharedPref = mCtx
                 .getSharedPreferences(MY_SHARED_PREF, Context.MODE_PRIVATE);
 
-        if (sharedPref.getString(ADMIN_ID, null) != null)
+        if (sharedPref.getString(COLL_EMAIL, null) != null)
             return true;
         else
             return false;
     }
 
-    public boolean saveAdminDetails(int collId, String collName, String collFullName,
-                                        String adminId) {
+    public boolean saveCollegeDetails(int collId, String collName, String collFullName,
+                                      String collEmail) {
 
         SharedPreferences.Editor sharedPref = mCtx.getSharedPreferences(MY_SHARED_PREF,
                 Context.MODE_PRIVATE).edit();
@@ -45,7 +45,7 @@ public class SharedPrefManager {
         sharedPref.putInt(COLL_ID, collId);
         sharedPref.putString(COLL_NAME, collName);
         sharedPref.putString(COLL_FULL_NAME, collFullName);
-        sharedPref.putString(ADMIN_ID, ADMIN_ID);
+        sharedPref.putString(COLL_EMAIL, collEmail);
 
         sharedPref.apply();
         return true;
@@ -72,11 +72,11 @@ public class SharedPrefManager {
         return sharedPref.getString(COLL_FULL_NAME, null);
     }
 
-    public String getAdminId() {
+    public String getCollEmail() {
         SharedPreferences sharedPref = mCtx
                 .getSharedPreferences(MY_SHARED_PREF, Context.MODE_PRIVATE);
 
-        return sharedPref.getString(ADMIN_ID, null);
+        return sharedPref.getString(COLL_EMAIL, null);
     }
 
 }

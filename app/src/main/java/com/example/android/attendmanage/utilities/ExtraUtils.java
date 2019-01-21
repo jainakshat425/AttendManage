@@ -1,10 +1,5 @@
 package com.example.android.attendmanage.utilities;
 
-import android.content.Context;
-import android.widget.Spinner;
-
-import com.example.android.attendmanage.adapter.SpinnerArrayAdapter;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -67,8 +62,11 @@ public class ExtraUtils {
 
     private static final String DB_URL = "http://192.168.43.156/attendmanagephp/v1/";
 
-    public static final String ADMIN_LOGIN_URL = DB_URL + "adminLogin.php";
+    public static final String COLLEGE_LOGIN_URL = DB_URL + "collegeLogin.php";
     public static final String REGISTER_URL = DB_URL + "registerCollege.php";
+    public static final String CHANGE_COLLEGE_PASS_URL = DB_URL + "changeCollegePassword.php";
+    public static final String UPDATE_COLLEGE_DETAILS_URL = DB_URL + "updateCollegeDetails.php";
+
     public static final String GET_BRANCH_NAMES_URL = DB_URL + "getBranchNames.php";
     public static final String GET_SECS_URL = DB_URL + "getSections.php";
     public static final String GET_FAC_USER_IDS = DB_URL + "getFacUserIds.php";

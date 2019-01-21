@@ -1,118 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="8dp"
-        android:orientation="vertical">
+        android:layout_margin="4dp"
+        app:cardCornerRadius="5dp"
+        tools:context=".MainActivity">
 
-        <LinearLayout style="@style/main_container">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp">
 
-            <RelativeLayout
-                android:id="@+id/manage_branch_main"
-                style="@style/main_card_container">
+            <TextView
+                android:id="@+id/main_coll_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/primary_circle"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:layout_marginTop="4dp"
+                android:textStyle="bold"
+                tools:text="GIT" />
 
-                <ImageView
-                    android:id="@+id/iv_branch"
-                    style="@style/main_image_view"
-                    app:srcCompat="@drawable/ic_branch" />
+            <TextView
+                android:id="@+id/main_coll_full_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/main_coll_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-condensed"
+                android:textAllCaps="true"
+                android:textSize="20sp"
+                tools:text="Global Institute Of Technology" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
-                <TextView
-                    style="@style/main_textview"
-                    android:layout_below="@id/iv_branch"
-                    android:text="Manage Branch(s)" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:cardCornerRadius="5dp">
 
-            </RelativeLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <RelativeLayout
-                android:id="@+id/manage_class_main"
-                style="@style/main_card_container">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/iv_class"
-                    style="@style/main_image_view"
-                    app:srcCompat="@drawable/ic_class" />
+                <LinearLayout style="@style/main_container">
 
-                <TextView
-                    style="@style/main_textview"
-                    android:layout_below="@id/iv_class"
-                    android:text="Manage Class(s)" />
-            </RelativeLayout>
-        </LinearLayout>
+                    <RelativeLayout
+                        android:id="@+id/manage_branch_main"
+                        style="@style/main_card_container">
 
-        <LinearLayout style="@style/main_container">
+                        <ImageView
+                            android:id="@+id/iv_branch"
+                            style="@style/main_image_view"
+                            app:srcCompat="@drawable/ic_branch" />
 
-            <RelativeLayout
-                android:id="@+id/manage_student_main"
-                style="@style/main_card_container">
+                        <TextView
+                            style="@style/main_textview"
+                            android:layout_below="@id/iv_branch"
+                            android:text="Manage Branch(s)" />
 
-                <ImageView
-                    android:id="@+id/iv_student"
-                    style="@style/main_image_view"
-                    app:srcCompat="@drawable/ic_student" />
+                    </RelativeLayout>
 
-                <TextView
-                    style="@style/main_textview"
-                    android:layout_below="@id/iv_student"
-                    android:text="Manage Student(s)" />
+                    <RelativeLayout
+                        android:id="@+id/manage_class_main"
+                        style="@style/main_card_container">
 
-            </RelativeLayout>
+                        <ImageView
+                            android:id="@+id/iv_class"
+                            style="@style/main_image_view"
+                            app:srcCompat="@drawable/ic_class" />
 
-            <RelativeLayout
-                android:id="@+id/manage_fac_main"
-                style="@style/main_card_container">
+                        <TextView
+                            style="@style/main_textview"
+                            android:layout_below="@id/iv_class"
+                            android:text="Manage Class(s)" />
+                    </RelativeLayout>
+                </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/iv_faculty"
-                    style="@style/main_image_view"
-                    app:srcCompat="@drawable/ic_faculties" />
+                <LinearLayout style="@style/main_container">
 
-                <TextView
-                    style="@style/main_textview"
-                    android:layout_below="@id/iv_faculty"
-                    android:text="Manage Faculty(s)" />
-            </RelativeLayout>
-        </LinearLayout>
+                    <RelativeLayout
+                        android:id="@+id/manage_student_main"
+                        style="@style/main_card_container">
 
-        <LinearLayout style="@style/main_container">
+                        <ImageView
+                            android:id="@+id/iv_student"
+                            style="@style/main_image_view"
+                            app:srcCompat="@drawable/ic_student" />
 
-            <RelativeLayout
-                android:id="@+id/manage_sub_main"
-                style="@style/main_card_container">
+                        <TextView
+                            style="@style/main_textview"
+                            android:layout_below="@id/iv_student"
+                            android:text="Manage Student(s)" />
 
-                <ImageView
-                    android:id="@+id/iv_subject"
-                    style="@style/main_image_view"
-                    app:srcCompat="@drawable/ic_subject" />
+                    </RelativeLayout>
 
-                <TextView
-                    style="@style/main_textview"
-                    android:layout_below="@id/iv_subject"
-                    android:text="Manage Subject(s)" />
+                    <RelativeLayout
+                        android:id="@+id/manage_fac_main"
+                        style="@style/main_card_container">
 
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/manage_fac_sch_main"
-                style="@style/main_card_container">
+                        <ImageView
+                            android:id="@+id/iv_faculty"
+                            style="@style/main_image_view"
+                            app:srcCompat="@drawable/ic_faculties" />
 
-                <ImageView
-                    android:id="@+id/iv_fac_sch"
-                    style="@style/main_image_view"
-                    app:srcCompat="@drawable/ic_schedule" />
+                        <TextView
+                            style="@style/main_textview"
+                            android:layout_below="@id/iv_faculty"
+                            android:text="Manage Faculty(s)" />
+                    </RelativeLayout>
+                </LinearLayout>
 
-                <TextView
-                    style="@style/main_textview"
-                    android:layout_below="@id/iv_fac_sch"
-                    android:text="Faculty Schedule" />
+                <LinearLayout style="@style/main_container">
 
-            </RelativeLayout>
-        </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+                    <RelativeLayout
+                        android:id="@+id/manage_sub_main"
+                        style="@style/main_card_container">
+
+                        <ImageView
+                            android:id="@+id/iv_subject"
+                            style="@style/main_image_view"
+                            app:srcCompat="@drawable/ic_subject" />
+
+                        <TextView
+                            style="@style/main_textview"
+                            android:layout_below="@id/iv_subject"
+                            android:text="Manage Subject(s)" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/manage_fac_sch_main"
+                        style="@style/main_card_container">
+
+                        <ImageView
+                            android:id="@+id/iv_fac_sch"
+                            style="@style/main_image_view"
+                            app:srcCompat="@drawable/ic_schedule" />
+
+                        <TextView
+                            style="@style/main_textview"
+                            android:layout_below="@id/iv_fac_sch"
+                            android:text="Faculty Schedule" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

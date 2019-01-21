@@ -7,4 +7,7 @@
     <color name="textColor">#212121</color>
     <color name="darkRedColor">#870000</color>
     <color name="blue_color">#006978</color>
+
+    <color name="darkGrayColor">#424242</color>
+    <color name="darkerGrayColor">#1b1b1b</color>
 </resources>

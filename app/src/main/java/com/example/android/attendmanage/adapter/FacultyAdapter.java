@@ -108,9 +108,9 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.FacultyV
         int facId = faculty.getFacId();
 
         holder.nameTv.setText(name);
-        holder.facUserIdTv.setText(facUserId);
+        holder.facUserIdTv.setText(String.format("%s", facUserId));
         holder.deptTv.setText(dept);
-        holder.mobNoTv.setText(mobNo);
+        holder.mobNoTv.setText(String.format("Mob.No. %s", mobNo));
 
         holder.itemView.setTag(position);
         if (selectedItems.contains(faculty)) {
