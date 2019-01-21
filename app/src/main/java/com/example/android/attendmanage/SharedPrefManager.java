@@ -79,4 +79,7 @@ public class SharedPrefManager {
         return sharedPref.getString(COLL_EMAIL, null);
     }
 
+    public void clearCredentials() {
+        mCtx.getSharedPreferences(MY_SHARED_PREF, Context.MODE_PRIVATE).edit().clear().apply();
+    }
 }

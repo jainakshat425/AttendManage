@@ -130,6 +130,10 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        checkLoggedIn();
+    }
+
+    private void checkLoggedIn() {
         mSharedPref = SharedPrefManager.getInstance(this);
         if (mSharedPref.isLoggedIn()) {
 
@@ -181,6 +185,16 @@ public class MainActivity extends AppCompatActivity {
             showChangePasswordDialog();
             dialog.dismiss();
         });
+
+        dialogView.findViewById(R.id.logout).setOnClickListener(view -> {
+            logout();
+            dialog.dismiss();
+        });
+    }
+
+    private void logout() {
+        mSharedPref.clearCredentials();
+        checkLoggedIn();
     }
 
     private void showChangePasswordDialog() {

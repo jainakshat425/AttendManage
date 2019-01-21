@@ -32,7 +32,24 @@
         <TextView
             style="@style/main_textview"
             android:layout_below="@id/iv_keys"
-            android:text="Change Password" />
+            android:text="Change Password"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/logout"
+        style="@style/main_card_container">
+
+        <ImageView
+            android:id="@+id/iv_logout"
+            style="@style/main_image_view"
+            app:srcCompat="@drawable/ic_logout" />
+
+        <TextView
+            style="@style/main_textview"
+            android:layout_below="@id/iv_logout"
+            android:text="Logout" />
 
     </RelativeLayout>
 </LinearLayout>
