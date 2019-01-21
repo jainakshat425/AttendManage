@@ -888,8 +888,8 @@ public class VolleyTask {
         RequestHandler.getInstance(context).addToRequestQueue(request);
     }
 
-    public static void changeAdminPassword(Context context, int collId, String currentPass,
-                                           String newPass, VolleyCallback callback) {
+    public static void changeCollegePassword(Context context, int collId, String currentPass,
+                                             String newPass, VolleyCallback callback) {
         ProgressDialog pDialog = new ProgressDialog(context);
         pDialog.setMessage("Verifying & Updating...");
         pDialog.show();

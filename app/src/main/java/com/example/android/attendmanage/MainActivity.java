@@ -1,6 +1,5 @@
 package com.example.android.attendmanage;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 
 import androidx.appcompat.app.AlertDialog;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.attendmanage.adapter.SpinnerArrayAdapter;
 import com.example.android.attendmanage.utilities.ExtraUtils;
@@ -222,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
                         currentPassIn, newPassIn, confirmPassIn);
 
                 if (valid) {
-                    VolleyTask.changeAdminPassword(MainActivity.this, collId, currentPass, newPass,
+                    VolleyTask.changeCollegePassword(MainActivity.this, collId, currentPass, newPass,
                             jObj -> dialog.dismiss());
                 }
             }
