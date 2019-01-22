@@ -109,12 +109,12 @@ public class BranchEditActivity extends AppCompatActivity {
     }
 
     private void refreshHodSpinner() {
-        VolleyTask.getFacUserIds(this, collId, jObj -> {
+        VolleyTask.getfacEmails(this, collId, jObj -> {
             try {
                 List<String> facList = new ArrayList<>();
                 facList.add("Head of Department");
 
-                JSONArray facJsonArr = jObj.getJSONArray("fac_user_ids");
+                JSONArray facJsonArr = jObj.getJSONArray("fac_emails");
 
                 for (int i = 0; i < facJsonArr.length(); i++) {
                     facList.add(facJsonArr.getString(i));

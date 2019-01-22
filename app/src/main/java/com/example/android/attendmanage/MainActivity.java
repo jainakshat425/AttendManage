@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int collId;
     private SharedPrefManager mSharedPref;
-    private String facUserId = null;
+    private String facEmail = null;
 
     @OnClick(R.id.manage_branch_main)
     void startBranchActivity() {
@@ -70,31 +70,37 @@ public class MainActivity extends AppCompatActivity {
 
         final Spinner facSpinner = dialogView.findViewById(R.id.dialog_fac_id_spin);
 
-        VolleyTask.getFacUserIds(this, collId, jObj -> {
-            try {
-                JSONArray facIdJsonArr = jObj.getJSONArray("fac_user_ids");
-                List<String> facIdList = new ArrayList<>();
-                facIdList.add("Select");
+        List<String> emailList = new ArrayList<>();
+        emailList.add("Select");
 
-                for (int i = 0; i < facIdJsonArr.length(); i++) {
-                    facIdList.add(facIdJsonArr.getString(i));
+        VolleyTask.getfacEmails(this, collId, jObj -> {
+            try {
+                JSONArray emailJsonArr = jObj.getJSONArray("fac_emails");
+
+                for (int i = 0; i < emailJsonArr.length(); i++) {
+                    emailList.add(emailJsonArr.getString(i));
                 }
 
-                String[] facIdArr = facIdList.toArray(new String[0]);
+                String[] emailArr = emailList.toArray(new String[0]);
                 SpinnerArrayAdapter facIdAdapter = new SpinnerArrayAdapter(MainActivity.this,
                         android.R.layout.simple_spinner_dropdown_item,
-                        facIdArr);
+                        emailArr);
                 facSpinner.setAdapter(facIdAdapter);
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         });
+        String[] emailArr = emailList.toArray(new String[0]);
+        SpinnerArrayAdapter facIdAdapter = new SpinnerArrayAdapter(MainActivity.this,
+                android.R.layout.simple_spinner_dropdown_item,
+                emailArr);
+        facSpinner.setAdapter(facIdAdapter);
         facSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
                 if (pos != 0)
-                    facUserId = (String) parent.getItemAtPosition(pos);
+                    facEmail = (String) parent.getItemAtPosition(pos);
             }
 
             @Override
@@ -105,9 +111,9 @@ public class MainActivity extends AppCompatActivity {
 
         builder.setView(dialogView);
         builder.setPositiveButton("Next", (dialog, which) -> {
-            if (facUserId != null) {
+            if (facEmail != null) {
                 Intent intent = new Intent(MainActivity.this, FacScheduleActivity.class);
-                intent.putExtra(ExtraUtils.EXTRA_FAC_USER_ID, facUserId);
+                intent.putExtra(ExtraUtils.EXTRA_FAC_EMAIL, facEmail);
                 startActivity(intent);
             }
         });

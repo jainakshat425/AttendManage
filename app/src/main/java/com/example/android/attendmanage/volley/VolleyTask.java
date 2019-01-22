@@ -560,10 +560,10 @@ public class VolleyTask {
         RequestHandler.getInstance(context).addToRequestQueue(request);
     }
 
-    public static void getFacUserIds(final Context mContext, final int collId,
+    public static void getfacEmails(final Context mContext, final int collId,
                                      VolleyCallback callback) {
         StringRequest request = new StringRequest(Request.Method.POST,
-                ExtraUtils.GET_FAC_USER_IDS,
+                ExtraUtils.GET_FAC_EMAILS,
                 response -> {
                     try {
                         JSONObject jObj = new JSONObject(response);
@@ -592,7 +592,7 @@ public class VolleyTask {
         RequestHandler.getInstance(mContext).addToRequestQueue(request);
     }
 
-    public static void getFacSchedule(final Context mContext, final String facUserId, final String day,
+    public static void getFacSchedule(final Context mContext, final String facEmail, final String day,
                                       VolleyCallback callback) {
         ProgressDialog pDialog = new ProgressDialog(mContext);
         pDialog.setMessage("Loading...");
@@ -622,7 +622,7 @@ public class VolleyTask {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("fac_user_id", facUserId);
+                params.put("fac_email", facEmail);
                 params.put("day", day);
                 return params;
             }

@@ -54,7 +54,7 @@ public class FacScheduleActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         collegeId = SharedPrefManager.getInstance(this).getCollId();
-        facUserId = getIntent().getStringExtra(ExtraUtils.EXTRA_FAC_USER_ID);
+        facUserId = getIntent().getStringExtra(ExtraUtils.EXTRA_FAC_EMAIL);
         day = ExtraUtils.getCurrentDay();
 
         final MaterialDayPicker materialDayPicker = findViewById(R.id.fac_sch_day_pick);

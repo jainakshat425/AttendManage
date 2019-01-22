@@ -42,7 +42,7 @@ public class ExtraUtils {
     public static final String EXTRA_SUBJECT = "extra_subject";
     public static final String EXTRA_LECTURE_NO = "extra_lecture";
 
-    public static final String EXTRA_FAC_USER_ID = "extra_fac_user_id";
+    public static final String EXTRA_FAC_EMAIL = "extra_fac_email";
     public static final String EXTRA_FAC_NAME = "extra_fac_name";
     public static final String EXTRA_FAC_DEPT = "extra_fac_dept";
 
@@ -60,7 +60,7 @@ public class ExtraUtils {
     public static final int MODE_NEW = 2;
 
 
-    private static final String DB_URL = "http://192.168.43.156/attendmanagephp/v1/";
+    private static final String DB_URL = "http://10.0.11.249/attendmanagephp/v1/";
 
     public static final String COLLEGE_LOGIN_URL = DB_URL + "collegeLogin.php";
     public static final String REGISTER_URL = DB_URL + "registerCollege.php";
@@ -69,7 +69,7 @@ public class ExtraUtils {
 
     public static final String GET_BRANCH_NAMES_URL = DB_URL + "getBranchNames.php";
     public static final String GET_SECS_URL = DB_URL + "getSections.php";
-    public static final String GET_FAC_USER_IDS = DB_URL + "getFacUserIds.php";
+    public static final String GET_FAC_EMAILS = DB_URL + "getFacEmails.php";
     public static final String GET_SUBJECT_NAMES_URL = DB_URL + "getSubjectNames.php";
 
     public static final String DELETE_BRANCHES_URL = DB_URL + "deleteBranches.php";

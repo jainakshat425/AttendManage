@@ -101,14 +101,14 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.FacultyV
 
         Faculty faculty = mFaculty.get(position);
 
-        String facUserId = faculty.getFacUserId();
+        String facEmail = faculty.getfacEmail();
         String mobNo = faculty.getMobNo();
         String dept = faculty.getDeptName();
         String name = faculty.getFacName();
         int facId = faculty.getFacId();
 
         holder.nameTv.setText(name);
-        holder.facUserIdTv.setText(String.format("%s", facUserId));
+        holder.facEmailTv.setText(String.format("%s", facEmail));
         holder.deptTv.setText(dept);
         holder.mobNoTv.setText(String.format("Mob.No. %s", mobNo));
 
@@ -138,7 +138,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.FacultyV
             implements View.OnClickListener, View.OnLongClickListener{
 
         private TextView nameTv;
-        private TextView facUserIdTv;
+        private TextView facEmailTv;
         private TextView deptTv;
         private TextView mobNoTv;
 
@@ -147,7 +147,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyAdapter.FacultyV
             view.setOnClickListener(this);
             view.setOnLongClickListener(this);
             nameTv = view.findViewById(R.id.fac_name);
-            facUserIdTv = view.findViewById(R.id.fac_user_id);
+            facEmailTv = view.findViewById(R.id.fac_email);
             deptTv = view.findViewById(R.id.fac_dept);
             mobNoTv = view.findViewById(R.id.fac_mob_no);
         }

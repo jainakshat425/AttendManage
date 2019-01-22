@@ -88,7 +88,7 @@ public class FacultyEditActivity extends AppCompatActivity {
             Faculty faculty = getIntent().getParcelableExtra(ExtraUtils.EXTRA_FACULTY_OBJ);
             facId = faculty.getFacId();
 
-            Objects.requireNonNull(emailIn.getEditText()).setText(faculty.getFacUserId());
+            Objects.requireNonNull(emailIn.getEditText()).setText(faculty.getfacEmail());
             Objects.requireNonNull(nameIn.getEditText()).setText(faculty.getFacName());
             Objects.requireNonNull(mobNoIn.getEditText()).setText(faculty.getMobNo());
 

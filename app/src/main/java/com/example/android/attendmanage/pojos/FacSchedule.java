@@ -35,15 +35,15 @@ public class FacSchedule implements Parcelable {
     @SerializedName("lect_end_time")
     @Expose
     private String lectEndTime;
-    @SerializedName("fac_user_id")
+    @SerializedName("fac_email")
     @Expose
-    private String facUserId;
+    private String facEmail;
     @SerializedName("day")
     @Expose
     private String day;
 
     public FacSchedule(Integer sem, String bName, String section, Integer lectNo, String subName,
-                       String lectStartTime, String lectEndTime, String facUserId, String day) {
+                       String lectStartTime, String lectEndTime, String facEmail, String day) {
         this.sem = sem;
         this.bName = bName;
         this.section = section;
@@ -51,7 +51,7 @@ public class FacSchedule implements Parcelable {
         this.subName = subName;
         this.lectStartTime = lectStartTime;
         this.lectEndTime = lectEndTime;
-        this.facUserId = facUserId;
+        this.facEmail = facEmail;
         this.day = day;
     }
 
@@ -59,16 +59,16 @@ public class FacSchedule implements Parcelable {
         return day;
     }
 
-    public String getFacUserId() {
-        return facUserId;
+    public String getfacEmail() {
+        return facEmail;
     }
 
     public void setDay(String day) {
         this.day = day;
     }
 
-    public void setFacUserId(String facUserId) {
-        this.facUserId = facUserId;
+    public void setfacEmail(String facEmail) {
+        this.facEmail = facEmail;
     }
 
     public Integer getSem() {
@@ -148,7 +148,7 @@ public class FacSchedule implements Parcelable {
         out.writeString(subName);
         out.writeString(lectStartTime);
         out.writeString(lectEndTime);
-        out.writeString(facUserId);
+        out.writeString(facEmail);
         out.writeString(day);
     }
 
@@ -171,7 +171,7 @@ public class FacSchedule implements Parcelable {
         subName = in.readString();
         lectStartTime = in.readString();
         lectEndTime = in.readString();
-        facUserId = in.readString();
+        facEmail = in.readString();
         day = in.readString();
 
     }

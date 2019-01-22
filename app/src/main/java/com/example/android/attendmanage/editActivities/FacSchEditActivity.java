@@ -53,11 +53,11 @@ public class FacSchEditActivity extends AppCompatActivity {
     MaterialDayPicker materialDayPicker;
     String day = "";
     /**
-     * facUserId
+     * facEmail
      */
     @BindView(R.id.fse_fac_spin)
     Spinner facSpinner;
-    private String facUserId = "";
+    private String facEmail = "";
 
     /**
      * semester
@@ -121,7 +121,7 @@ public class FacSchEditActivity extends AppCompatActivity {
         if (validateInputs()) {
 
             FacSchedule facSch = new FacSchedule(Integer.parseInt(semester), branch, section,
-                    lectNo, subject, lectStart, lectEnd, facUserId, day);
+                    lectNo, subject, lectStart, lectEnd, facEmail, day);
 
             Gson gson = new Gson();
             String facSchJson = gson.toJson(facSch);
@@ -154,7 +154,7 @@ public class FacSchEditActivity extends AppCompatActivity {
             FacSchedule facSch = getIntent().getParcelableExtra(ExtraUtils.EXTRA_FAC_SCH_OBJ);
             lectId = facSch.getLectId();
             day = facSch.getDay();
-            facUserId = facSch.getFacUserId();
+            facEmail = facSch.getfacEmail();
             semester = String.valueOf(facSch.getSem());
             branch = facSch.getBName();
             section = facSch.getSection();
@@ -219,7 +219,7 @@ public class FacSchEditActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long l) {
                 if (pos != 0)
-                    facUserId = (String) parent.getItemAtPosition(pos);
+                    facEmail = (String) parent.getItemAtPosition(pos);
             }
 
             @Override
@@ -463,25 +463,25 @@ public class FacSchEditActivity extends AppCompatActivity {
     }
 
     private void refreshFacultySpinner() {
-        VolleyTask.getFacUserIds(this, collId, jObj -> {
+        VolleyTask.getfacEmails(this, collId, jObj -> {
             try {
-                JSONArray facIdJsonArr = jObj.getJSONArray("fac_user_ids");
-                List<String> facIdList = new ArrayList<>();
-                facIdList.add("Faculty");
+                JSONArray emailJsonArr = jObj.getJSONArray("fac_emails");
+                List<String> emailList = new ArrayList<>();
+                emailList.add("Faculty");
 
-                for (int i = 0; i < facIdJsonArr.length(); i++) {
-                    facIdList.add(facIdJsonArr.getString(i));
+                for (int i = 0; i < emailJsonArr.length(); i++) {
+                    emailList.add(emailJsonArr.getString(i));
                 }
 
-                String[] facIdArr = facIdList.toArray(new String[0]);
+                String[] emailArr = emailList.toArray(new String[0]);
                 SpinnerArrayAdapter facIdAdapter = new SpinnerArrayAdapter(FacSchEditActivity.this,
                         android.R.layout.simple_spinner_dropdown_item,
-                        facIdArr);
+                        emailArr);
                 facSpinner.setAdapter(facIdAdapter);
 
-                if (facUserId != null || !TextUtils.isEmpty(facUserId)) {
-                    for (int i = 0; i < facIdArr.length; i++) {
-                        if (facIdArr[i].equals(facUserId)) {
+                if (facEmail != null || !TextUtils.isEmpty(facEmail)) {
+                    for (int i = 0; i < emailArr.length; i++) {
+                        if (emailArr[i].equals(facEmail)) {
                             facSpinner.setSelection(i);
                             break;
                         }
@@ -499,7 +499,7 @@ public class FacSchEditActivity extends AppCompatActivity {
         if(TextUtils.isEmpty(day)) {
             Snackbar.make(layout, "Day not selected!", Snackbar.LENGTH_SHORT).show();
             return false;
-        } else if(TextUtils.isEmpty(facUserId)) {
+        } else if(TextUtils.isEmpty(facEmail)) {
             Snackbar.make(layout, "Faculty not selected!", Snackbar.LENGTH_SHORT).show();
             return false;
         } else if(TextUtils.isEmpty(semester)) {

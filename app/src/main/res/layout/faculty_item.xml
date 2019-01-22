@@ -43,7 +43,7 @@
             tools:text="Teacher Name" />
 
         <TextView
-            android:id="@+id/fac_user_id"
+            android:id="@+id/fac_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"

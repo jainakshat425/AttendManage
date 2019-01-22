@@ -15,9 +15,9 @@ public class Faculty implements Parcelable {
     @SerializedName("fac_id")
     @Expose
     private Integer facId;
-    @SerializedName("fac_user_id")
+    @SerializedName("fac_email")
     @Expose
-    private String facUserId;
+    private String facEmail;
     @SerializedName("fac_name")
     @Expose
     private String facName;
@@ -28,9 +28,9 @@ public class Faculty implements Parcelable {
     @Expose
     private String deptName;
 
-    public Faculty(Integer facId, String facUserId, String facName, String mobNo, String deptName) {
+    public Faculty(Integer facId, String facEmail, String facName, String mobNo, String deptName) {
         this.facId = facId;
-        this.facUserId = facUserId;
+        this.facEmail = facEmail;
         this.facName = facName;
         this.mobNo = mobNo;
         this.deptName = deptName;
@@ -44,12 +44,12 @@ public class Faculty implements Parcelable {
         this.facId = facId;
     }
 
-    public String getFacUserId() {
-        return facUserId;
+    public String getfacEmail() {
+        return facEmail;
     }
 
-    public void setFacUserId(String facUserId) {
-        this.facUserId = facUserId;
+    public void setfacEmail(String facEmail) {
+        this.facEmail = facEmail;
     }
 
     public String getFacName() {
@@ -82,7 +82,7 @@ public class Faculty implements Parcelable {
 
     public void writeToParcel(Parcel out, int flags) {
         out.writeInt(facId);
-        out.writeString(facUserId);
+        out.writeString(facEmail);
         out.writeString(facName);
         out.writeString(mobNo);
         out.writeString(deptName);
@@ -100,7 +100,7 @@ public class Faculty implements Parcelable {
 
     public Faculty(Parcel in) {
         facId = in.readInt();
-        facUserId = in.readString();
+        facEmail = in.readString();
         facName = in.readString();
         mobNo = in.readString();
         deptName = in.readString();
