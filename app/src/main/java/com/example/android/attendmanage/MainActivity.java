@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         List<String> emailList = new ArrayList<>();
         emailList.add("Select");
 
-        VolleyTask.getfacEmails(this, collId, jObj -> {
+        VolleyTask.getFacEmails(this, collId, jObj -> {
             try {
                 JSONArray emailJsonArr = jObj.getJSONArray("fac_emails");
 

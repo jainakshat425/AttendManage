@@ -109,7 +109,7 @@ public class BranchEditActivity extends AppCompatActivity {
     }
 
     private void refreshHodSpinner() {
-        VolleyTask.getfacEmails(this, collId, jObj -> {
+        VolleyTask.getFacEmails(this, collId, jObj -> {
             try {
                 List<String> facList = new ArrayList<>();
                 facList.add("Head of Department");

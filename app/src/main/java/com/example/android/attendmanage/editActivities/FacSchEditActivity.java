@@ -463,7 +463,7 @@ public class FacSchEditActivity extends AppCompatActivity {
     }
 
     private void refreshFacultySpinner() {
-        VolleyTask.getfacEmails(this, collId, jObj -> {
+        VolleyTask.getFacEmails(this, collId, jObj -> {
             try {
                 JSONArray emailJsonArr = jObj.getJSONArray("fac_emails");
                 List<String> emailList = new ArrayList<>();

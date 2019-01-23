@@ -63,8 +63,8 @@ public class BranchActivity extends AppCompatActivity {
     private void refreshList() {
         VolleyTask.getBranches(this, collegeId, jObj -> {
             ArrayList<Branch> branches = GsonUtils.extractBranchesFromJson(jObj);
-            if (branches != null && branches.size() > 0) {
-                mAdapter.swapList(branches);
+            mAdapter.swapList(branches);
+            if (mAdapter.getItemCount() > 0) {
                 emptyView.setVisibility(View.GONE);
             } else {
                 emptyView.setVisibility(View.VISIBLE);
@@ -76,6 +76,6 @@ public class BranchActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-       refreshList();
+        refreshList();
     }
 }

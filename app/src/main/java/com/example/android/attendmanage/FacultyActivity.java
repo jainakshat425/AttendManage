@@ -63,8 +63,8 @@ public class FacultyActivity extends AppCompatActivity {
     private void refreshList() {
         VolleyTask.getFaculties(this, collegeId, jObj -> {
             ArrayList<Faculty> faculties = GsonUtils.extractFacultiesFromJson(jObj);
-            if (faculties != null && faculties.size() > 0) {
-                mAdapter.swapList(faculties);
+            mAdapter.swapList(faculties);
+            if (mAdapter.getItemCount() > 0) {
                 emptyView.setVisibility(View.GONE);
             } else {
                 emptyView.setVisibility(View.VISIBLE);

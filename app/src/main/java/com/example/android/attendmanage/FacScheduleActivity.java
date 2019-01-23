@@ -85,8 +85,8 @@ public class FacScheduleActivity extends AppCompatActivity {
     private void refreshList() {
         VolleyTask.getFacSchedule(this, facUserId, day, jObj -> {
             mFacSch = GsonUtils.extractFacSchFromJson(jObj);
-            if (mFacSch != null && mFacSch.size() > 0) {
-                mAdapter.swapList(mFacSch);
+            mAdapter.swapList(mFacSch);
+            if (mAdapter.getItemCount() > 0) {
                 emptyView.setVisibility(View.GONE);
             } else {
                 emptyView.setVisibility(View.VISIBLE);

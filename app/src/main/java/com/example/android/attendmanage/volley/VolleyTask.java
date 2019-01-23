@@ -560,8 +560,8 @@ public class VolleyTask {
         RequestHandler.getInstance(context).addToRequestQueue(request);
     }
 
-    public static void getfacEmails(final Context mContext, final int collId,
-                                     VolleyCallback callback) {
+    public static void getFacEmails(final Context mContext, final int collId,
+                                    VolleyCallback callback) {
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.GET_FAC_EMAILS,
                 response -> {

@@ -75,8 +75,9 @@ public class StudentActivity extends AppCompatActivity {
     private void refreshList() {
         VolleyTask.getStudents(this, collegeId, semester, branch, section, jObj -> {
             ArrayList<Student> students = GsonUtils.extractStudentsFromJson(jObj);
-            if (students != null && students.size() > 0) {
-                mAdapter.swapList(students);
+            mAdapter.swapList(students);
+
+            if (mAdapter.getItemCount() > 0) {
                 emptyView.setVisibility(View.GONE);
             } else {
                 emptyView.setVisibility(View.VISIBLE);
