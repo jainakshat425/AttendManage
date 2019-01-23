@@ -8,7 +8,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -33,6 +37,27 @@ public class BranchActivity extends AppCompatActivity {
     private BranchAdapter mAdapter;
     int collegeId;
 
+    @BindView(R.id.no_network_view)
+    RelativeLayout noNetworkLayout;
+
+    private BroadcastReceiver networkReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean isNotConnected = intent.getBooleanExtra(
+                    ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
+
+            if (isNotConnected) {
+                noNetworkLayout.setVisibility(View.VISIBLE);
+                emptyView.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.GONE);
+            } else {
+                noNetworkLayout.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                refreshList();
+            }
+        }
+    };
+
     @OnClick(R.id.branch_add_fab)
     void addNewBranch() {
         Intent intent = new Intent(this, BranchEditActivity.class);
@@ -56,26 +81,37 @@ public class BranchActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.addItemDecoration(divider);
         mRecyclerView.setAdapter(mAdapter);
-
-        refreshList();
     }
 
     private void refreshList() {
-        VolleyTask.getBranches(this, collegeId, jObj -> {
-            ArrayList<Branch> branches = GsonUtils.extractBranchesFromJson(jObj);
-            mAdapter.swapList(branches);
-            if (mAdapter.getItemCount() > 0) {
-                emptyView.setVisibility(View.GONE);
-            } else {
-                emptyView.setVisibility(View.VISIBLE);
-            }
 
-        });
+        if (ExtraUtils.isNetworkAvailable(this)) {
+
+            VolleyTask.getBranches(this, collegeId, jObj -> {
+                ArrayList<Branch> branches = GsonUtils.extractBranchesFromJson(jObj);
+                mAdapter.swapList(branches);
+                if (mAdapter.getItemCount() > 0) {
+                    emptyView.setVisibility(View.GONE);
+                } else {
+                    emptyView.setVisibility(View.VISIBLE);
+                }
+            });
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkReceiver, filter);
+
         refreshList();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkReceiver);
     }
 }

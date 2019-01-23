@@ -34,10 +34,11 @@
 
             <TextView
                 android:id="@+id/main_coll_full_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/main_coll_name"
                 android:layout_centerHorizontal="true"
+                android:gravity="center"
                 android:layout_marginTop="4dp"
                 android:fontFamily="sans-serif-condensed"
                 android:textAllCaps="true"

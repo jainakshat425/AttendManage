@@ -9,6 +9,11 @@
     android:padding="4dp"
     tools:context=".editActivities.FacultyEditActivity">
 
+    <include
+        android:id="@+id/no_network_view"
+        android:visibility="gone"
+        layout="@layout/no_network_layout"/>
+
     <LinearLayout
         style="@style/SpinnerLayoutContainer"
         android:layout_marginBottom="8dp"

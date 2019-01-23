@@ -1,10 +1,14 @@
 package com.example.android.attendmanage;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -12,8 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.attendmanage.adapter.SpinnerArrayAdapter;
 import com.example.android.attendmanage.utilities.ExtraUtils;
@@ -35,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
     private int collId;
     private SharedPrefManager mSharedPref;
     private String facEmail = null;
+
+    @BindView(R.id.main_coll_full_name)
+    TextView collFullNameTv;
+
+    @BindView(R.id.main_coll_name)
+    TextView collNameTv;
 
     @OnClick(R.id.manage_branch_main)
     void startBranchActivity() {
@@ -63,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.manage_fac_sch_main)
     void startFacSchManageActivity() {
+
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Select faculty");
 
@@ -120,12 +133,6 @@ public class MainActivity extends AppCompatActivity {
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
         builder.show();
     }
-
-    @BindView(R.id.main_coll_full_name)
-    TextView collFullNameTv;
-
-    @BindView(R.id.main_coll_name)
-    TextView collNameTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,22 +221,28 @@ public class MainActivity extends AppCompatActivity {
         final AlertDialog dialog = builder.show();
 
         dialogView.findViewById(R.id.cp_modify_button).setOnClickListener(view -> {
-            if (currentPassIn.getEditText() != null
-                    && newPassIn.getEditText() != null
-                    && confirmPassIn.getEditText() != null) {
 
-                String currentPass = currentPassIn.getEditText().getText().toString().trim();
-                String newPass = newPassIn.getEditText().getText().toString().trim();
-                String confirmPass = confirmPassIn.getEditText().getText().toString().trim();
+            if (ExtraUtils.isNetworkAvailable(this)) {
+                if (currentPassIn.getEditText() != null
+                        && newPassIn.getEditText() != null
+                        && confirmPassIn.getEditText() != null) {
 
-                boolean valid = validatePassInputs(currentPass, newPass, confirmPass,
-                        currentPassIn, newPassIn, confirmPassIn);
+                    String currentPass = currentPassIn.getEditText().getText().toString().trim();
+                    String newPass = newPassIn.getEditText().getText().toString().trim();
+                    String confirmPass = confirmPassIn.getEditText().getText().toString().trim();
 
-                if (valid) {
-                    VolleyTask.changeCollegePassword(MainActivity.this, collId, currentPass, newPass,
-                            jObj -> dialog.dismiss());
+                    boolean valid = validatePassInputs(currentPass, newPass, confirmPass,
+                            currentPassIn, newPassIn, confirmPassIn);
+
+                    if (valid) {
+                        VolleyTask.changeCollegePassword(MainActivity.this, collId,
+                                currentPass, newPass,
+                                jObj -> dialog.dismiss());
+                    }
                 }
-            }
+            } else
+                Toast.makeText(MainActivity.this, R.string.network_not_available,
+                        Toast.LENGTH_SHORT).show();
         });
 
         dialogView.findViewById(R.id.cp_cancel_button).setOnClickListener(view ->
@@ -261,29 +274,33 @@ public class MainActivity extends AppCompatActivity {
 
         dialogView.findViewById(R.id.ep_update_button).setOnClickListener(view -> {
 
-            if (passIn.getEditText() != null
-                    && collNameIn.getEditText() != null
-                    && collFullNameIn.getEditText() != null
-                    && emailIn.getEditText() != null) {
+            if (ExtraUtils.isNetworkAvailable(this)) {
+                if (passIn.getEditText() != null
+                        && collNameIn.getEditText() != null
+                        && collFullNameIn.getEditText() != null
+                        && emailIn.getEditText() != null) {
 
-                String password = passIn.getEditText().getText().toString().trim();
-                String collName = collNameIn.getEditText().getText().toString().trim();
-                String collFullName = collFullNameIn.getEditText().getText().toString().trim();
-                String email = emailIn.getEditText().getText().toString().trim();
+                    String password = passIn.getEditText().getText().toString().trim();
+                    String collName = collNameIn.getEditText().getText().toString().trim();
+                    String collFullName = collFullNameIn.getEditText().getText().toString().trim();
+                    String email = emailIn.getEditText().getText().toString().trim();
 
-                boolean valid = validateCollegeDetailInputs(password, collName, collFullName,
-                        email, passIn, collNameIn, collFullNameIn, emailIn);
+                    boolean valid = validateCollegeDetailInputs(password, collName, collFullName,
+                            email, passIn, collNameIn, collFullNameIn, emailIn);
 
-                if (valid) {
-                    VolleyTask.updateCollegeDetails(this, collId, password, collName, collFullName,
-                            email, jObj -> {
-                                dialog.dismiss();
-                                mSharedPref.saveCollegeDetails(collId, collName, collFullName, email);
-                                collNameTv.setText(collName);
-                                collFullNameTv.setText(collFullName);
-                            });
+                    if (valid) {
+                        VolleyTask.updateCollegeDetails(this, collId, password, collName, collFullName,
+                                email, jObj -> {
+                                    dialog.dismiss();
+                                    mSharedPref.saveCollegeDetails(collId, collName, collFullName, email);
+                                    collNameTv.setText(collName);
+                                    collFullNameTv.setText(collFullName);
+                                });
+                    }
                 }
-            }
+            } else
+                Toast.makeText(MainActivity.this, R.string.network_not_available,
+                        Toast.LENGTH_SHORT).show();
         });
 
         dialogView.findViewById(R.id.ep_cancel_button).setOnClickListener(view -> dialog.dismiss());
@@ -359,5 +376,4 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
-
 }

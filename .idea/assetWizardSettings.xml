@@ -14,9 +14,11 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_pass_hidden" />
+                            <entry key="height" value="60" />
+                            <entry key="outputName" value="ic_data" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\AKSHAT JAIN\Downloads\eye-off-outline.svg" />
+                            <entry key="sourceFile" value="C:\Users\AKSHAT JAIN\Downloads\data.svg" />
+                            <entry key="width" value="60" />
                           </map>
                         </option>
                       </PersistentState>

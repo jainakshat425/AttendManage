@@ -6,6 +6,10 @@
     android:orientation="vertical"
     android:paddingTop="15dp">
 
+    <include
+        android:id="@+id/no_network_view"
+        android:visibility="gone"
+        layout="@layout/no_network_layout"/>
 
     <LinearLayout style="@style/SpinnerLayoutContainer">
 

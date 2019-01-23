@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.android.attendmanage">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -81,6 +82,7 @@
             android:name=".editActivities.FacultyEditActivity"
             android:label="Edit Faculty"
             android:parentActivityName=".FacultyActivity" />
+
     </application>
 
 </manifest>

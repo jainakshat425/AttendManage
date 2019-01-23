@@ -1,6 +1,10 @@
 package com.example.android.attendmanage;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -37,6 +41,29 @@ public class StudentActivity extends AppCompatActivity {
     String section;
     Bundle bundle;
 
+    @BindView(R.id.no_network_view)
+    RelativeLayout noNetworkLayout;
+
+    private BroadcastReceiver networkReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean isNotConnected = intent.getBooleanExtra(
+                    ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
+
+            if (isNotConnected) {
+                noNetworkLayout.setVisibility(View.VISIBLE);
+                emptyView.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.GONE);
+            } else {
+                noNetworkLayout.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                refreshList();
+            }
+
+
+        }
+    };
+
     @OnClick(R.id.student_add_fab)
     void addNewStudent() {
         Intent intent = new Intent(this, StudentEditActivity.class);
@@ -66,31 +93,39 @@ public class StudentActivity extends AppCompatActivity {
             mRecyclerView.setLayoutManager(layoutManager);
             mRecyclerView.addItemDecoration(divider);
             mRecyclerView.setAdapter(mAdapter);
-
-            refreshList();
         }
-
     }
 
     private void refreshList() {
-        VolleyTask.getStudents(this, collegeId, semester, branch, section, jObj -> {
-            ArrayList<Student> students = GsonUtils.extractStudentsFromJson(jObj);
-            mAdapter.swapList(students);
+        if (ExtraUtils.isNetworkAvailable(this)) {
+            if (bundle != null) {
+                VolleyTask.getStudents(this, collegeId, semester, branch, section, jObj -> {
+                    ArrayList<Student> students = GsonUtils.extractStudentsFromJson(jObj);
+                    mAdapter.swapList(students);
 
-            if (mAdapter.getItemCount() > 0) {
-                emptyView.setVisibility(View.GONE);
-            } else {
-                emptyView.setVisibility(View.VISIBLE);
+                    if (mAdapter.getItemCount() > 0) {
+                        emptyView.setVisibility(View.GONE);
+                    } else {
+                        emptyView.setVisibility(View.VISIBLE);
+                    }
+
+                });
             }
-
-        });
-
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (bundle != null)
-            refreshList();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkReceiver, filter);
+
+        refreshList();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkReceiver);
     }
 }

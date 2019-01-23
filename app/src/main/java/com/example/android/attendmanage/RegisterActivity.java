@@ -9,13 +9,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
+import com.example.android.attendmanage.utilities.ExtraUtils;
 import com.example.android.attendmanage.volley.VolleyTask;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    @BindView(R.id.root_layout)
+    LinearLayout rootLayout;
 
     @BindView(R.id.reg_email_input)
     TextInputLayout emailIn;
@@ -46,13 +53,17 @@ public class RegisterActivity extends AppCompatActivity {
         collName = Objects.requireNonNull(collNameIn.getEditText()).getText().toString().trim();
         collFullName = Objects.requireNonNull(collFullNameIn.getEditText()).getText().toString().trim();
 
-        if (validateInputs()) {
+        if (ExtraUtils.isNetworkAvailable(this)) {
+            if (validateInputs()) {
 
-            VolleyTask.registerCollege(this, email, pass, collName, collFullName,
-                    jObj -> {
-                        finish();
-                        startActivity(new Intent(this, LoginActivity.class));
-                    });
+                VolleyTask.registerCollege(this, email, pass, collName, collFullName,
+                        jObj -> {
+                            finish();
+                            startActivity(new Intent(this, LoginActivity.class));
+                        });
+            }
+        } else {
+            Snackbar.make(rootLayout, R.string.network_not_available, Snackbar.LENGTH_SHORT).show();
         }
     }
 

@@ -8,7 +8,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -33,6 +37,28 @@ public class ClassActivity extends AppCompatActivity {
     private ClassAdapter mAdapter;
     int collegeId;
 
+    @BindView(R.id.no_network_view)
+    RelativeLayout noNetworkLayout;
+
+    private BroadcastReceiver networkReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean isNotConnected = intent.getBooleanExtra(
+                    ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
+
+            if (isNotConnected) {
+                noNetworkLayout.setVisibility(View.VISIBLE);
+                emptyView.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.GONE);
+            } else {
+                noNetworkLayout.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                refreshList();
+            }
+
+        }
+    };
+
     @OnClick(R.id.class_add_fab)
     void addNewClass() {
         Intent intent = new Intent(this, ClassEditActivity.class);
@@ -56,26 +82,36 @@ public class ClassActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.addItemDecoration(divider);
         mRecyclerView.setAdapter(mAdapter);
-
-       refreshList();
     }
 
     private void refreshList() {
-        VolleyTask.getClasses(this, collegeId, jObj -> {
-            ArrayList<Class> classes = GsonUtils.extractClassesFromJson(jObj);
-            mAdapter.swapList(classes);
-            if (mAdapter.getItemCount() > 0) {
-                emptyView.setVisibility(View.GONE);
-            } else {
-                emptyView.setVisibility(View.VISIBLE);
-            }
+        if (ExtraUtils.isNetworkAvailable(this)) {
+            VolleyTask.getClasses(this, collegeId, jObj -> {
+                ArrayList<Class> classes = GsonUtils.extractClassesFromJson(jObj);
+                mAdapter.swapList(classes);
+                if (mAdapter.getItemCount() > 0) {
+                    emptyView.setVisibility(View.GONE);
+                } else {
+                    emptyView.setVisibility(View.VISIBLE);
+                }
 
-        });
+            });
+        }
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-      refreshList();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkReceiver, filter);
+
+        refreshList();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkReceiver);
     }
 }

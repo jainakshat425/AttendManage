@@ -9,6 +9,11 @@
     android:padding="4dp"
     tools:context=".editActivities.SubjectEditActivity">
 
+    <include
+        android:id="@+id/no_network_view"
+        android:visibility="gone"
+        layout="@layout/no_network_layout"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/sub_name_input"
         android:layout_width="match_parent"

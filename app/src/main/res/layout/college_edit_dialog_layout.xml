@@ -5,6 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/no_network_view"
+        android:visibility="gone"
+        layout="@layout/no_network_layout"/>
 
     <TextView
         android:layout_width="match_parent"
