@@ -25,7 +25,8 @@ public class Class implements Parcelable {
     private String branchName;
 
 
-    public Class(Integer semester, String section, String branchName) {
+    public Class(int classId, Integer semester, String section, String branchName) {
+        this.classId = classId;
         this.semester = semester;
         this.section = section;
         this.branchName = branchName;

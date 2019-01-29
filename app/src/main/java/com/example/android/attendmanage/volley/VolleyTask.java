@@ -41,11 +41,13 @@ public class VolleyTask {
                     pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
-                        Toast.makeText(context, jObj.getString("message"),
-                                Toast.LENGTH_SHORT).show();
+
                         if (!jObj.getBoolean("error")) {
                             volleyCallback.onSuccessResponse(jObj);
-                        }
+                        } else
+                            Toast.makeText(context, jObj.getString("message"),
+                                    Toast.LENGTH_SHORT).show();
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -63,7 +65,8 @@ public class VolleyTask {
                 return params;
             }
         };
-
+        request.setRetryPolicy(new DefaultRetryPolicy(30000,
+                0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestHandler.getInstance(context).addToRequestQueue(request);
     }
 
@@ -75,7 +78,7 @@ public class VolleyTask {
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.DELETE_BRANCHES_URL,
                 response -> {
-            pDialog.dismiss();
+                    pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
                         if (!jObj.getBoolean("error")) {
@@ -109,7 +112,7 @@ public class VolleyTask {
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.GET_BRANCHES_URL,
                 response -> {
-            pDialog.dismiss();
+                    pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
 
@@ -138,7 +141,7 @@ public class VolleyTask {
         RequestHandler.getInstance(mContext).addToRequestQueue(request);
     }
 
-    public static void saveBranch(Context context, int collId, int branchId, String branchJson) {
+    public static void saveBranch(Context context, int collId, String branchJson) {
         ProgressDialog pDialog = new ProgressDialog(context);
         pDialog.setMessage("Saving...");
         pDialog.show();
@@ -164,11 +167,8 @@ public class VolleyTask {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                if (branchId != -1) {
-                    params.put("branch_id", String.valueOf(branchId));
-                } else {
-                    params.put("college_id", String.valueOf(collId));
-                }
+
+                params.put("college_id", String.valueOf(collId));
                 params.put("branch_obj", branchJson);
                 return params;
             }
@@ -184,7 +184,7 @@ public class VolleyTask {
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.DELETE_CLASSES_URL,
                 response -> {
-            pDialog.dismiss();
+                    pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
                         if (!jObj.getBoolean("error")) {
@@ -218,7 +218,7 @@ public class VolleyTask {
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.GET_CLASSES_URL,
                 response -> {
-            pDialog.dismiss();
+                    pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
 
@@ -247,7 +247,7 @@ public class VolleyTask {
         RequestHandler.getInstance(mContext).addToRequestQueue(request);
     }
 
-    public static void saveClass(Context context, int collId, int classId, String classJson) {
+    public static void saveClass(Context context, int collId, String classJson) {
         ProgressDialog pDialog = new ProgressDialog(context);
         pDialog.setMessage("Saving...");
         pDialog.show();
@@ -273,9 +273,7 @@ public class VolleyTask {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                if (classId != -1) {
-                    params.put("class_id", String.valueOf(classId));
-                }
+
                 params.put("college_id", String.valueOf(collId));
                 params.put("class_obj", classJson);
                 return params;
@@ -355,7 +353,7 @@ public class VolleyTask {
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.DELETE_SUBJECTS_URL,
                 response -> {
-            pDialog.dismiss();
+                    pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
                         if (!jObj.getBoolean("error")) {
@@ -381,7 +379,7 @@ public class VolleyTask {
         RequestHandler.getInstance(context).addToRequestQueue(request);
     }
 
-    public static void saveSubject(Context context, int collId, int subId, String subJson) {
+    public static void saveSubject(Context context, int collId, String subJson) {
         ProgressDialog pDialog = new ProgressDialog(context);
         pDialog.setMessage("Saving...");
         pDialog.show();
@@ -407,9 +405,7 @@ public class VolleyTask {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                if (subId != -1) {
-                    params.put("sub_id", String.valueOf(subId));
-                }
+               
                 params.put("college_id", String.valueOf(collId));
                 params.put("subject_obj", subJson);
                 return params;
@@ -497,7 +493,7 @@ public class VolleyTask {
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.DELETE_STUDENTS_URL,
                 response -> {
-            pDialog.dismiss();
+                    pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
                         if (!jObj.getBoolean("error")) {
@@ -523,7 +519,7 @@ public class VolleyTask {
         RequestHandler.getInstance(context).addToRequestQueue(request);
     }
 
-    public static void saveStudent(Context context, int collId, int stdId, String stdJson) {
+    public static void saveStudent(Context context, int collId, String stdJson) {
         ProgressDialog pDialog = new ProgressDialog(context);
         pDialog.setMessage("Saving...");
         pDialog.show();
@@ -549,9 +545,7 @@ public class VolleyTask {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                if (stdId != -1) {
-                    params.put("student_id", String.valueOf(stdId));
-                }
+
                 params.put("college_id", String.valueOf(collId));
                 params.put("student_obj", stdJson);
                 return params;
@@ -600,7 +594,7 @@ public class VolleyTask {
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.GET_FAC_SCH_URL,
                 response -> {
-            pDialog.dismiss();
+                    pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
 
@@ -638,7 +632,7 @@ public class VolleyTask {
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.DELETE_FAC_SCHS_URL,
                 response -> {
-            pDialog.dismiss();
+                    pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
                         if (!jObj.getBoolean("error")) {
@@ -664,7 +658,7 @@ public class VolleyTask {
         RequestHandler.getInstance(context).addToRequestQueue(request);
     }
 
-    public static void saveFacSch(Context context, int collId, int lectId, String facSchJson) {
+    public static void saveFacSch(Context context, int collId, String facSchJson) {
         ProgressDialog pDialog = new ProgressDialog(context);
         pDialog.setMessage("Saving...");
         pDialog.show();
@@ -691,9 +685,6 @@ public class VolleyTask {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                if (lectId != -1) {
-                    params.put("lect_id", String.valueOf(lectId));
-                }
                 params.put("college_id", String.valueOf(collId));
                 params.put("fac_sch_obj", facSchJson);
                 return params;
@@ -743,7 +734,7 @@ public class VolleyTask {
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.GET_FACULTIES_URL,
                 response -> {
-            pDialog.dismiss();
+                    pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
 
@@ -780,7 +771,7 @@ public class VolleyTask {
         StringRequest request = new StringRequest(Request.Method.POST,
                 ExtraUtils.DELETE_FACULTY_URL,
                 response -> {
-            pDialog.dismiss();
+                    pDialog.dismiss();
                     try {
                         JSONObject jObj = new JSONObject(response);
                         if (!jObj.getBoolean("error")) {
@@ -841,7 +832,7 @@ public class VolleyTask {
             }
         };
         request.setRetryPolicy(new DefaultRetryPolicy(30000,
-                    0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestHandler.getInstance(context).addToRequestQueue(request);
     }
 

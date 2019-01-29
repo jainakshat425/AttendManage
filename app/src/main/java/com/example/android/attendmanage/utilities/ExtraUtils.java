@@ -10,12 +10,6 @@ import java.util.Locale;
 
 public class ExtraUtils {
 
-    public static final  SimpleDateFormat dateDisplayFormat =
-            new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
-
-    public static final SimpleDateFormat dateFormat =
-            new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-
     public static final SimpleDateFormat dayFormat =
             new SimpleDateFormat("EEEE", Locale.US);
 
@@ -25,31 +19,11 @@ public class ExtraUtils {
     public static final SimpleDateFormat timeDisplayFormat =
             new SimpleDateFormat("hh:mm a", Locale.US);
 
-    public static final String EXTRA_COLLEGE_ID = "extra_college_id";
-    public static final String EXTRA_CLASS_ID = "extra_class_id";
-    public static final String EXTRA_BRANCH_ID = "extra_branch_id";
-    public static final String EXTRA_SUBJECT_ID = "extra_subject_id";
-    public static final String EXTRA_ATTEND_REC_ID = "extra_attend_rec_id";
-
-    public static final String EXTRA_COLLEGE = "extra_college";
     public static final String EXTRA_SEMESTER = "extra_semester";
     public static final String EXTRA_BRANCH = "extra_branch";
     public static final String EXTRA_SECTION = "extra_section";
 
-    public static final String EXTRA_DATE = "extra_date";
-    public static final String EXTRA_DAY = "extra_day";
-    public static final String EXTRA_DISPLAY_DATE = "extra_display_date" ;
-    public static final String EXTRA_FROM_DATE = "extra_from_date" ;
-    public static final String EXTRA_TO_DATE = "extra_to_date" ;
-    public static final String EXTRA_IS_DATE_WISE = "extra_is_date_wise" ;
-
-    public static final String EXTRA_SUBJECT = "extra_subject";
-    public static final String EXTRA_LECTURE_NO = "extra_lecture";
-
     public static final String EXTRA_FAC_EMAIL = "extra_fac_email";
-    public static final String EXTRA_FAC_NAME = "extra_fac_name";
-    public static final String EXTRA_FAC_DEPT = "extra_fac_dept";
-
 
     public static final String EXTRA_BRANCH_OBJ = "extra_branch_obj";
     public static final String EXTRA_CLASS_OBJ = "extra_class_obj";
@@ -64,7 +38,7 @@ public class ExtraUtils {
     public static final int MODE_NEW = 2;
 
 
-    private static final String DB_URL = "http://10.0.11.249/attendmanagephp/v1/";
+    private static final String DB_URL = "http://192.168.42.112/AttendManagePHP/CollegeAppPHP/";
 
     public static final String COLLEGE_LOGIN_URL = DB_URL + "collegeLogin.php";
     public static final String REGISTER_URL = DB_URL + "registerCollege.php";
@@ -100,20 +74,6 @@ public class ExtraUtils {
     public static final String DELETE_FACULTY_URL = DB_URL + "deleteFaculties.php";
     public static final String SAVE_FACULTY_URL = DB_URL + "saveFaculty.php";
 
-
-    public static String getLecture(String lecture) {
-        if (Integer.parseInt(lecture) == 1) {
-            lecture = lecture + "st Lecture";
-        } else if (Integer.parseInt(lecture) == 2) {
-            lecture = lecture + "nd Lecture";
-        } else if (Integer.parseInt(lecture) == 3) {
-            lecture = lecture + "rd Lecture";
-        } else {
-            lecture = lecture + "th Lecture";
-        }
-        return lecture;
-    }
-
     public static String getSemester(String semester) {
         if (Integer.parseInt(semester) == 1) {
             semester = semester + "st Sem";
@@ -130,26 +90,6 @@ public class ExtraUtils {
     public static String getCurrentDay() {
         String day = dayFormat.format(Calendar.getInstance().getTime());
         return day.toUpperCase();
-    }
-
-    public static String getCurrentDate() {
-        String date = dateFormat.format(Calendar.getInstance().getTime());
-        return date;
-    }
-
-    public static String getCurrentDateDisplay() {
-        String date = dateDisplayFormat.format(Calendar.getInstance().getTime());
-        return date;
-    }
-
-    public static String getCurrentTime() {
-        String time = timeFormat.format(Calendar.getInstance().getTime());
-        return time;
-    }
-
-    public static String getCurrentTimeDisplay() {
-        String time = timeFormat.format(Calendar.getInstance().getTime());
-        return time;
     }
 
     public static boolean isNetworkAvailable(Context context) {

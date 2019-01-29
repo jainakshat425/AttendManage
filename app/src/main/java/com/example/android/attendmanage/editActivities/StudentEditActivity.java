@@ -78,10 +78,10 @@ public class StudentEditActivity extends AppCompatActivity {
 
         if (validateInputs()) {
             Gson gson = new Gson();
-            String stdJson = gson.toJson(new Student(rollNo, name, Integer.parseInt(semester), branch,
+            String stdJson = gson.toJson(new Student(stdId, rollNo, name, Integer.parseInt(semester), branch,
                     section));
 
-            VolleyTask.saveStudent(this, collId, stdId, stdJson);
+            VolleyTask.saveStudent(this, collId, stdJson);
         }
     }
 

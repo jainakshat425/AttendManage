@@ -42,8 +42,9 @@ public class FacSchedule implements Parcelable {
     @Expose
     private String day;
 
-    public FacSchedule(Integer sem, String bName, String section, Integer lectNo, String subName,
+    public FacSchedule(int lectId, Integer sem, String bName, String section, Integer lectNo, String subName,
                        String lectStartTime, String lectEndTime, String facEmail, String day) {
+        this.lectId = lectId;
         this.sem = sem;
         this.bName = bName;
         this.section = section;

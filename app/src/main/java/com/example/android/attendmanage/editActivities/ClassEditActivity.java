@@ -70,9 +70,9 @@ public class ClassEditActivity extends AppCompatActivity {
 
         if (validateInputs()) {
             Gson gson = new Gson();
-            String classJson = gson.toJson(new Class(Integer.parseInt(semester), section, branch));
+            String classJson = gson.toJson(new Class(classId, Integer.parseInt(semester), section, branch));
 
-            VolleyTask.saveClass(this, collId, classId, classJson);
+            VolleyTask.saveClass(this, collId, classJson);
         }
     }
 

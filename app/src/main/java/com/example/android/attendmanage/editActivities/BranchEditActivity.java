@@ -55,9 +55,9 @@ public class BranchEditActivity extends AppCompatActivity {
         if (validateInputs()) {
 
             Gson gson = new Gson();
-            String branchJson = gson.toJson(new Branch(bName, bFullName, hodSelected));
+            String branchJson = gson.toJson(new Branch(branchId, bName, bFullName, hodSelected));
 
-            VolleyTask.saveBranch(this, collId, branchId, branchJson);
+            VolleyTask.saveBranch(this, collId, branchJson);
         }
     }
 

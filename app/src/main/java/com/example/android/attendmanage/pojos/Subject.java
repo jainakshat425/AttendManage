@@ -28,7 +28,8 @@ public class Subject implements Parcelable {
     @Expose
     private String subFullName;
 
-    public Subject(String subSemester, String bName, String subName, String subFullName) {
+    public Subject(int subId, String subSemester, String bName, String subName, String subFullName) {
+        this.subId = subId;
         this.subSemester = subSemester;
         this.bName = bName;
         this.subName = subName;

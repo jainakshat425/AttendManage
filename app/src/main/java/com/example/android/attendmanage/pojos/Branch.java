@@ -24,7 +24,8 @@ public class Branch implements Parcelable {
     @Expose
     private String hodId;
 
-    public Branch(String bName, String bFullName, String hodId) {
+    public Branch(int branchId, String bName, String bFullName, String hodId) {
+        this.id = branchId;
         this.bName = bName;
         this.bFullName = bFullName;
         this.hodId = hodId;

@@ -120,13 +120,13 @@ public class FacSchEditActivity extends AppCompatActivity {
 
         if (validateInputs()) {
 
-            FacSchedule facSch = new FacSchedule(Integer.parseInt(semester), branch, section,
+            FacSchedule facSch = new FacSchedule(lectId, Integer.parseInt(semester), branch, section,
                     lectNo, subject, lectStart, lectEnd, facEmail, day);
 
             Gson gson = new Gson();
             String facSchJson = gson.toJson(facSch);
 
-            VolleyTask.saveFacSch(this, collId, lectId, facSchJson);
+            VolleyTask.saveFacSch(this, collId, facSchJson);
         }
     }
 

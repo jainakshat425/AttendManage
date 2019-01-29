@@ -31,7 +31,8 @@ public class Student implements Parcelable {
     @Expose
     private String section;
 
-    public Student(String stdRollNo, String stdName, Integer semester, String bName, String section) {
+    public Student(int stdId, String stdRollNo, String stdName, Integer semester, String bName, String section) {
+        this.studentId = stdId;
         this.stdRollNo = stdRollNo;
         this.stdName = stdName;
         this.semester = semester;

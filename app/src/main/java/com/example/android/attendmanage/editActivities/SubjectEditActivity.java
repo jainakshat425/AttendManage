@@ -70,9 +70,9 @@ public class SubjectEditActivity extends AppCompatActivity {
 
         if (validateInputs()) {
             Gson gson = new Gson();
-            String subJson = gson.toJson(new Subject(semester, branch, sName, sFullName));
+            String subJson = gson.toJson(new Subject(subId, semester, branch, sName, sFullName));
 
-            VolleyTask.saveSubject(this, collId, subId, subJson);
+            VolleyTask.saveSubject(this, collId, subJson);
         }
     }
 
