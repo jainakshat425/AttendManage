@@ -166,6 +166,10 @@ public class FacSchEditActivity extends AppCompatActivity {
                     .setText(facSch.getLectStartTime());
             Objects.requireNonNull(lectEndIn.getEditText())
                     .setText(facSch.getLectEndTime());
+        } else {
+            facEmail = getIntent().getStringExtra(ExtraUtils.EXTRA_FAC_EMAIL);
+            day = ExtraUtils.getCurrentDay();
+            materialDayPicker.setSelectedDays(MaterialDayPicker.Weekday.valueOf(day));
         }
 
         setupFacultySpinner();

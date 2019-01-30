@@ -106,6 +106,12 @@ public class StudentEditActivity extends AppCompatActivity {
             semester = String.valueOf(student.getSemester());
             branch = student.getBName();
             section = student.getSection();
+        } else {
+            Bundle classDetails = getIntent().getBundleExtra(ExtraUtils.EXTRA_CLASS_DETAILS);
+
+            semester = classDetails.getString(ExtraUtils.EXTRA_SEMESTER);
+            branch = classDetails.getString(ExtraUtils.EXTRA_BRANCH);
+            section = classDetails.getString(ExtraUtils.EXTRA_SECTION);
         }
 
         setupBranchSpinner();

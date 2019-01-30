@@ -22,6 +22,8 @@ public class ExtraUtils {
     public static final String EXTRA_SEMESTER = "extra_semester";
     public static final String EXTRA_BRANCH = "extra_branch";
     public static final String EXTRA_SECTION = "extra_section";
+    public static final String EXTRA_CLASS_DETAILS = "extra_class_details";
+
 
     public static final String EXTRA_FAC_EMAIL = "extra_fac_email";
 

@@ -70,6 +70,7 @@ public class FacScheduleActivity extends AppCompatActivity {
     void addNewFacSch() {
         Intent intent = new Intent(this, FacSchEditActivity.class);
         intent.putExtra(ExtraUtils.EXTRA_EDIT_MODE, ExtraUtils.MODE_NEW);
+        intent.putExtra(ExtraUtils.EXTRA_FAC_EMAIL, facUserId);
         startActivity(intent);
     }
 

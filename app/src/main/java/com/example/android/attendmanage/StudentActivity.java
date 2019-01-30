@@ -68,6 +68,7 @@ public class StudentActivity extends AppCompatActivity {
     void addNewStudent() {
         Intent intent = new Intent(this, StudentEditActivity.class);
         intent.putExtra(ExtraUtils.EXTRA_EDIT_MODE, ExtraUtils.MODE_NEW);
+        intent.putExtra(ExtraUtils.EXTRA_CLASS_DETAILS, bundle);
         startActivity(intent);
     }
 
