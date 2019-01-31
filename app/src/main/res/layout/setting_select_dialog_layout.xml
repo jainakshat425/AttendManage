@@ -27,7 +27,7 @@
         <ImageView
             android:id="@+id/iv_keys"
             style="@style/main_image_view"
-            app:srcCompat="@drawable/ic_pass_key" />
+            app:srcCompat="@drawable/ic_change_password" />
 
         <TextView
             style="@style/main_textview"

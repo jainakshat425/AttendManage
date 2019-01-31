@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.android.attendmanage">
+    package="com.example.android.CollegeApp">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,8 +15,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".MainActivity"
-            android:label="Attendance Manage">
+            android:name="com.example.android.CollegeApp.MainActivity"
+            android:label="College">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,64 +24,64 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="com.example.android.CollegeApp.LoginActivity"
             android:label="Login" />
         <activity
-            android:name=".RegisterActivity"
+            android:name="com.example.android.CollegeApp.RegisterActivity"
             android:label="Register"
-            android:parentActivityName=".LoginActivity" />
+            android:parentActivityName="com.example.android.CollegeApp.LoginActivity" />
         <activity
-            android:name=".BranchActivity"
+            android:name="com.example.android.CollegeApp.BranchActivity"
             android:label="Branches"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName="com.example.android.CollegeApp.MainActivity" />
         <activity
-            android:name=".editActivities.BranchEditActivity"
+            android:name="com.example.android.CollegeApp.editActivities.BranchEditActivity"
             android:label="Edit Branch"
-            android:parentActivityName=".BranchActivity" />
+            android:parentActivityName="com.example.android.CollegeApp.BranchActivity" />
         <activity
-            android:name=".ClassActivity"
+            android:name="com.example.android.CollegeApp.ClassActivity"
             android:label="Classes"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName="com.example.android.CollegeApp.MainActivity" />
         <activity
-            android:name=".editActivities.ClassEditActivity"
+            android:name="com.example.android.CollegeApp.editActivities.ClassEditActivity"
             android:label="Edit Class"
-            android:parentActivityName=".ClassActivity" />
+            android:parentActivityName="com.example.android.CollegeApp.ClassActivity" />
         <activity
-            android:name=".SubjectActivity"
+            android:name="com.example.android.CollegeApp.SubjectActivity"
             android:label="Subjects"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName="com.example.android.CollegeApp.MainActivity" />
         <activity
-            android:name=".editActivities.SubjectEditActivity"
+            android:name="com.example.android.CollegeApp.editActivities.SubjectEditActivity"
             android:label="Edit Subject"
-            android:parentActivityName=".SubjectActivity" />
+            android:parentActivityName="com.example.android.CollegeApp.SubjectActivity" />
         <activity
-            android:name=".ClassSelectActivity"
+            android:name="com.example.android.CollegeApp.ClassSelectActivity"
             android:label="Select Class"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName="com.example.android.CollegeApp.MainActivity" />
         <activity
-            android:name=".StudentActivity"
+            android:name="com.example.android.CollegeApp.StudentActivity"
             android:label="Students"
-            android:parentActivityName=".ClassSelectActivity" />
+            android:parentActivityName="com.example.android.CollegeApp.ClassSelectActivity" />
         <activity
-            android:name=".editActivities.StudentEditActivity"
+            android:name="com.example.android.CollegeApp.editActivities.StudentEditActivity"
             android:label="Edit Student"
-            android:parentActivityName=".StudentActivity" />
+            android:parentActivityName="com.example.android.CollegeApp.StudentActivity" />
         <activity
-            android:name=".FacScheduleActivity"
+            android:name="com.example.android.CollegeApp.FacScheduleActivity"
             android:label="Schedule"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName="com.example.android.CollegeApp.MainActivity" />
         <activity
-            android:name=".editActivities.FacSchEditActivity"
+            android:name="com.example.android.CollegeApp.editActivities.FacSchEditActivity"
             android:label="Edit Lecture"
-            android:parentActivityName=".FacScheduleActivity" />
+            android:parentActivityName="com.example.android.CollegeApp.FacScheduleActivity" />
         <activity
-            android:name=".FacultyActivity"
+            android:name="com.example.android.CollegeApp.FacultyActivity"
             android:label="Faculties"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName="com.example.android.CollegeApp.MainActivity" />
         <activity
-            android:name=".editActivities.FacultyEditActivity"
+            android:name="com.example.android.CollegeApp.editActivities.FacultyEditActivity"
             android:label="Edit Faculty"
-            android:parentActivityName=".FacultyActivity" />
+            android:parentActivityName="com.example.android.CollegeApp.FacultyActivity" />
 
     </application>
 
